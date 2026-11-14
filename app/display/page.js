@@ -125,7 +125,10 @@ export default function PublicDisplayPage() {
             return (
               <div
                 key={tile.id}
-                className={`display-tile ${tile.isServing ? 'display-tile-serving' : ''} fade-in`}
+                className="display-tile fade-in"
+                style={{
+                  borderColor: tile.isServing ? theme.color : 'var(--border)',
+                }}
               >
                 {/* Office Title */}
                 <div
@@ -162,40 +165,43 @@ export default function PublicDisplayPage() {
                   </span>
                 </div>
 
-              {/* Now Serving Inset Display */}
-              <div
-                className="inset"
-                style={{
-                  textAlign: 'center',
-                  margin: '1.25rem 0',
-                  padding: '1.5rem 1rem',
-                  backgroundColor: tile.isServing ? 'var(--accent-light)' : 'var(--surface-muted)',
-                  borderColor: tile.isServing ? 'var(--accent-border)' : 'var(--border)',
-                }}
-              >
+                {/* Now Serving Inset Display with Department Theme Background */}
                 <div
+                  className="inset"
                   style={{
-                    fontSize: '0.78rem',
-                    fontWeight: 800,
-                    letterSpacing: '0.08em',
-                    color: tile.isServing ? 'var(--accent)' : 'var(--muted)',
-                    textTransform: 'uppercase',
-                    marginBottom: '0.35rem',
+                    textAlign: 'center',
+                    margin: '1.25rem 0',
+                    padding: '1.5rem 1rem',
+                    backgroundColor: tile.isServing ? theme.bg : 'var(--surface-muted)',
+                    borderColor: tile.isServing ? theme.border : 'var(--border)',
                   }}
                 >
-                  {tile.isServing ? 'Now Serving at Counter' : 'Desk Currently Idle'}
-                </div>
+                  <div
+                    style={{
+                      fontSize: '0.78rem',
+                      fontWeight: 800,
+                      letterSpacing: '0.08em',
+                      color: tile.isServing ? theme.color : 'var(--muted)',
+                      textTransform: 'uppercase',
+                      marginBottom: '0.35rem',
+                    }}
+                  >
+                    {tile.isServing ? 'Now Serving at Counter' : 'Desk Currently Idle'}
+                  </div>
 
-                <div
-                  className={`tabular-nums ${tile.isServing ? 'token-hero' : 'token-num'}`}
-                  style={{
-                    fontSize: tile.isServing ? '4.25rem' : '3rem',
-                    color: tile.isServing ? 'var(--accent)' : 'var(--muted)',
-                  }}
-                >
-                  {tile.nowServing}
+                  <div
+                    className="tabular-nums"
+                    style={{
+                      fontSize: tile.isServing ? '4.25rem' : '3rem',
+                      fontWeight: 800,
+                      color: tile.isServing ? theme.color : 'var(--muted)',
+                      letterSpacing: '-0.02em',
+                      lineHeight: 1.1,
+                    }}
+                  >
+                    {tile.nowServing}
+                  </div>
                 </div>
-              </div>
 
               {/* Next Waiting Up */}
               <div
