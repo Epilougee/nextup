@@ -79,10 +79,7 @@ export default function PublicDisplayPage() {
           </div>
           <div>
             <div style={{ fontSize: '1.3rem', fontWeight: 700, color: 'var(--primary-dark)', letterSpacing: '-0.01em' }}>
-              NextUp Waiting Room Display
-            </div>
-            <div className="text-muted" style={{ fontSize: '0.85rem' }}>
-              Live Token Status • All Desks
+              Waiting Room Display
             </div>
           </div>
         </div>
@@ -91,21 +88,6 @@ export default function PublicDisplayPage() {
           <div>
             <div className="display-clock tabular-nums">{clock || data?.currentTime || '--:--'}</div>
             <div className="text-muted text-sm">{dateDisplay || data?.currentDateTime || 'IST'}</div>
-          </div>
-          <div
-            style={{
-              backgroundColor: '#EBF6F0',
-              border: '1px solid #CCEAD9',
-              color: 'var(--completed)',
-              padding: '0.45rem 0.85rem',
-              borderRadius: 'var(--radius-sm)',
-              fontSize: '0.75rem',
-              fontWeight: 700,
-              textTransform: 'uppercase',
-              letterSpacing: '0.05em',
-            }}
-          >
-            ● Live Sync
           </div>
         </div>
       </header>
