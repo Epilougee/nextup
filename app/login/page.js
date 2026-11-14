@@ -31,20 +31,30 @@ export default function LoginPage() {
 
   return (
     <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1.5rem' }}>
-      <div style={{ width: '100%', maxWidth: '380px' }}>
-
-        {/* Logo */}
-        <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '.6rem' }}>
-            <span className="brand-badge"><IconToken /></span>
-            <span style={{ fontSize: '1.6rem', fontWeight: 700, color: 'var(--primary-dk)' }}>NextUp</span>
-          </div>
-          <p style={{ color: 'var(--muted)', fontSize: '.875rem', marginTop: '.35rem' }}>College queue & token desk</p>
-        </div>
+      <div style={{ width: '100%', maxWidth: '400px' }}>
 
         {/* Card */}
-        <div className="card">
-          <h2 style={{ marginBottom: '1.25rem' }}>Sign in</h2>
+        <div className="card" style={{ padding: '1.75rem' }}>
+          {/* Header inside the box */}
+          <div style={{ marginBottom: '1.25rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '.6rem', marginBottom: '.35rem' }}>
+              <span className="brand-badge" style={{ width: '32px', height: '32px', borderRadius: '7px' }}>
+                <IconToken />
+              </span>
+              <span style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--primary-dk)', letterSpacing: '-0.02em' }}>
+                NextUp
+              </span>
+            </div>
+            <p style={{ color: 'var(--muted)', fontSize: '.825rem', margin: 0 }}>
+              College queue & instant document portal
+            </p>
+          </div>
+
+          <div style={{ borderTop: '1px solid var(--border)', paddingTop: '1.1rem', marginBottom: '1.1rem' }}>
+            <div style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--primary-dk)' }}>
+              Sign in
+            </div>
+          </div>
 
           {error && (
             <div style={{ background: 'var(--red-bg)', border: '1px solid var(--red-bd)', color: 'var(--red)', padding: '.65rem .9rem', borderRadius: 'var(--r-sm)', marginBottom: '1rem', fontSize: '.875rem', display: 'flex', alignItems: 'center', gap: '.45rem' }}>
