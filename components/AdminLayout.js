@@ -52,8 +52,8 @@ export default function AdminLayout({ children, user }) {
       <aside className={`admin-sidebar ${sidebarOpen ? 'open' : ''}`}>
         <div className="admin-sidebar-header">
           <div className="brand-title">
-            <span className="brand-badge">QL</span>
-            <span>QueueLess</span>
+            <span className="brand-badge">NU</span>
+            <span>NextUp</span>
           </div>
           <button
             className="hamburger-btn"

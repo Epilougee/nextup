@@ -75,11 +75,11 @@ export default function PublicDisplayPage() {
               letterSpacing: '-0.02em',
             }}
           >
-            QL
+            NU
           </div>
           <div>
             <div style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--primary-dark)', letterSpacing: '-0.02em' }}>
-              CAMPUS TOKEN DISPLAY BOARD
+              NEXTUP CAMPUS DISPLAY
             </div>
             <div className="text-muted" style={{ fontSize: '0.8125rem', fontWeight: 500 }}>
               National Institute of Technology & Management • Central Waiting Lounge

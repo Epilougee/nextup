@@ -1,8 +1,8 @@
-# QueueLess - Digital Queue, Token Management & Instant Document Portal
+# NextUp - Digital Queue, Token Management & Instant Document Portal
 
 **Live GitHub Repository**: [https://github.com/Epilougee/queueless](https://github.com/Epilougee/queueless)
 
-QueueLess is an institutional digital queue, token management, and instant digital document issuance web application designed for college administration offices (Accounts, Examination Cell, Admissions, Library, Certificates).
+NextUp is an institutional digital queue, token management, and instant digital document issuance web application designed for college administration offices (Accounts, Examination Cell, Admissions, Library, Certificates).
 
 Built with a soothing, modern Slate & Pure White design, it provides students with:
 1. **Instant Digital Document Portal (No Office Visit Needed)**: Apply directly online for verified institutional documents (Bonafide certificates, fee receipts, grade transcripts, no-dues e-slips). Documents are generated instantly with official digital registrar seals and security verification hashes.

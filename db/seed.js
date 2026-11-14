@@ -59,7 +59,7 @@ function getISTDateString(daysAgo = 0) {
 }
 
 async function runSeed() {
-  console.log('--- Starting QueueLess Database Seed ---');
+  console.log('--- Starting NextUp Database Seed ---');
 
   // 1. Hash common password
   const salt = await bcrypt.genSalt(10);

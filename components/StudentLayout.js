@@ -40,8 +40,8 @@ export default function StudentLayout({ children, user }) {
       {/* Top Header */}
       <header className="student-topbar">
         <div className="brand-title">
-          <span className="brand-badge">QL</span>
-          <span style={{ fontWeight: 800 }}>QueueLess</span>
+          <span className="brand-badge">NU</span>
+          <span style={{ fontWeight: 800 }}>NextUp</span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
           {user && (

@@ -99,10 +99,10 @@ export default function LoginPage() {
               }}
             >
               <span className="brand-badge" style={{ fontSize: '0.8rem', padding: '0.2rem 0.45rem' }}>
-                QL
+                NU
               </span>
               <span style={{ fontWeight: 700, fontSize: '0.95rem', color: 'var(--primary-dark)' }}>
-                QueueLess
+                NextUp
               </span>
               <span style={{ color: 'var(--border-strong)' }}>|</span>
               <span className="text-muted text-sm" style={{ fontWeight: 500 }}>

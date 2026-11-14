@@ -6,9 +6,9 @@
 import './globals.css';
 
 export const metadata = {
-  title: 'QueueLess - Digital Queue & Token Management',
+  title: 'NextUp - Digital Queue, Token & Instant Document Portal',
   description:
-    'Simple, rule-based queue and token management web app for college administration offices.',
+    'Smart rule-based queue, token management and instant digital document web app for college administration offices.',
 };
 
 export default function RootLayout({ children }) {

@@ -64,30 +64,30 @@ export default function MyTokenPage() {
   // Handle document.title update and vibration based on alertLevel
   useEffect(() => {
     if (!token) {
-      document.title = 'My Token - QueueLess';
+      document.title = 'My Token - NextUp';
       return;
     }
 
     if (token.alertLevel === 'now') {
-      document.title = `(!) NOW SERVING ${token.token_code} - QueueLess`;
+      document.title = `(!) NOW SERVING ${token.token_code} - NextUp`;
       if (typeof window !== 'undefined' && 'navigator' in window && navigator.vibrate) {
         try {
           navigator.vibrate([300, 150, 300, 150, 300]);
         } catch (e) {}
       }
     } else if (token.alertLevel === 'near') {
-      document.title = `(!) Turn Near: Position ${token.position} - QueueLess`;
+      document.title = `(!) Turn Near: Position ${token.position} - NextUp`;
       if (typeof window !== 'undefined' && 'navigator' in window && navigator.vibrate) {
         try {
           navigator.vibrate([200, 100, 200]);
         } catch (e) {}
       }
     } else {
-      document.title = `Token ${token.token_code} (${token.position}th) - QueueLess`;
+      document.title = `Token ${token.token_code} (${token.position}th) - NextUp`;
     }
 
     return () => {
-      document.title = 'QueueLess - Digital Queue & Token Management';
+      document.title = 'NextUp - Digital Queue & Token Management';
     };
   }, [token]);
 

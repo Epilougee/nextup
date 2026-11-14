@@ -1,5 +1,5 @@
 -- ============================================================================
--- QueueLess - Database Schema for Supabase (PostgreSQL)
+-- NextUp - Database Schema for Supabase (PostgreSQL)
 -- Mid-Semester Project: Digital Queue, Token Management & Instant Digital Document Issuance
 -- ============================================================================
 
