@@ -1,11 +1,5 @@
 'use client';
 
-// ============================================================================
-// app/my-token/page.js
-// Student Live Token Monitor: Shows queue position, wait estimate, progress bar,
-// vibration alert, dynamic title warning, and token cancellation with confirmation.
-// ============================================================================
-
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import StudentLayout from '@/components/StudentLayout';
@@ -13,13 +7,8 @@ import ReconnectingPill from '@/components/ReconnectingPill';
 import ConfirmModal from '@/components/ConfirmModal';
 import { usePolling } from '@/components/usePolling';
 import {
-  IconToken,
-  IconClock,
-  IconAlert,
   IconCancel,
   IconSpinner,
-  IconCheck,
-  IconBuildingColumns,
 } from '@/components/Icons';
 
 export default function MyTokenPage() {
@@ -29,66 +18,40 @@ export default function MyTokenPage() {
   const [isCancelling, setIsCancelling] = useState(false);
   const [actionError, setActionError] = useState('');
 
-  // Check auth
   useEffect(() => {
     async function checkAuth() {
       try {
         const res = await fetch('/api/auth/me');
-        if (!res.ok) {
-          router.push('/login');
-          return;
-        }
+        if (!res.ok) { router.push('/login'); return; }
         const data = await res.json();
-        if (data.user.role === 'admin') {
-          router.push('/admin/queue');
-          return;
-        }
+        if (data.user.role === 'admin') { router.push('/admin/queue'); return; }
         setCurrentUser(data.user);
-      } catch (err) {
-        router.push('/login');
-      }
+      } catch { router.push('/login'); }
     }
     checkAuth();
   }, [router]);
 
-  // Poll active token every 4 seconds
   const fetchActiveToken = async () => {
     const res = await fetch('/api/student/active-token');
-    if (!res.ok) throw new Error('Failed to fetch active token');
+    if (!res.ok) throw new Error('Failed to fetch token');
     return res.json();
   };
 
   const { data, isLoading, isReconnecting, mutate } = usePolling(fetchActiveToken, 4000);
   const token = data?.activeToken;
 
-  // Handle document.title update and vibration based on alertLevel
   useEffect(() => {
-    if (!token) {
-      document.title = 'My Token - NextUp';
-      return;
-    }
-
+    if (!token) { document.title = 'My Token – NextUp'; return; }
     if (token.alertLevel === 'now') {
-      document.title = `(!) NOW SERVING ${token.token_code} - NextUp`;
-      if (typeof window !== 'undefined' && 'navigator' in window && navigator.vibrate) {
-        try {
-          navigator.vibrate([300, 150, 300, 150, 300]);
-        } catch (e) {}
-      }
+      document.title = `(!) NOW SERVING ${token.token_code} – NextUp`;
+      if (navigator?.vibrate) try { navigator.vibrate([300, 150, 300, 150, 300]); } catch {}
     } else if (token.alertLevel === 'near') {
-      document.title = `(!) Turn Near: Position ${token.position} - NextUp`;
-      if (typeof window !== 'undefined' && 'navigator' in window && navigator.vibrate) {
-        try {
-          navigator.vibrate([200, 100, 200]);
-        } catch (e) {}
-      }
+      document.title = `(!) Near: #${token.position} – NextUp`;
+      if (navigator?.vibrate) try { navigator.vibrate([200, 100, 200]); } catch {}
     } else {
-      document.title = `Token ${token.token_code} (${token.position}th) - NextUp`;
+      document.title = `Token ${token.token_code} (#${token.position}) – NextUp`;
     }
-
-    return () => {
-      document.title = 'NextUp - Digital Queue & Token Management';
-    };
+    return () => { document.title = 'NextUp'; };
   }, [token]);
 
   const getOrdinal = (n) => {
@@ -102,274 +65,180 @@ export default function MyTokenPage() {
     if (!token) return;
     setIsCancelling(true);
     setActionError('');
-
     try {
       const res = await fetch('/api/student/cancel', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token_id: token.id }),
       });
-
       const resData = await res.json();
-      if (!res.ok) {
-        throw new Error(resData.error || 'Failed to cancel token');
-      }
-
+      if (!res.ok) throw new Error(resData.error || 'Failed to cancel token');
       setShowCancelModal(false);
       await mutate();
-    } catch (err) {
-      setActionError(err.message);
-    } finally {
-      setIsCancelling(false);
-    }
+    } catch (err) { setActionError(err.message); }
+    finally { setIsCancelling(false); }
   };
 
   return (
     <StudentLayout user={currentUser}>
       <ReconnectingPill show={isReconnecting} />
 
-      {/* Header Panel */}
-      <div
-        style={{
-          backgroundColor: 'var(--surface)',
-          border: '1px solid var(--border)',
-          borderRadius: 'var(--radius)',
-          padding: '1.25rem 1.5rem',
-          marginBottom: '1.25rem',
-          boxShadow: 'var(--shadow-sm)',
-        }}
-      >
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.25rem' }}>
-          <h1 style={{ fontSize: '1.3rem', color: 'var(--primary-dark)' }}>My Desk Token</h1>
-          <span className="badge badge-waiting" style={{ fontSize: '0.7rem' }}>
-            <span className="status-dot"></span>
-            LIVE
+      {/* Header */}
+      <div className="card" style={{ padding: '1rem 1.25rem', marginBottom: '1rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <h1 style={{ fontSize: '1.2rem' }}>My Token</h1>
+          <span className="badge badge-blue" style={{ fontSize: '0.7rem' }}>
+            <span className="status-dot" /> LIVE
           </span>
         </div>
-        <p className="text-muted text-sm">
-          Keep this screen open. Your queue position updates automatically.
-        </p>
       </div>
 
       {actionError && (
-        <div
-          style={{
-            backgroundColor: '#FDF2F0',
-            border: '1px solid #F6CECA',
-            color: 'var(--noshow)',
-            padding: '0.65rem 0.85rem',
-            borderRadius: 'var(--radius-sm)',
-            marginBottom: '1rem',
-            fontSize: '0.875rem',
-          }}
-        >
-          {actionError}
-        </div>
+        <div style={{
+          background: 'var(--red-bg)', border: '1px solid var(--red-bd)',
+          color: 'var(--red)', borderRadius: 'var(--r-sm)',
+          padding: '0.65rem 0.85rem', marginBottom: '1rem', fontSize: '0.85rem',
+        }}>{actionError}</div>
       )}
 
-      {/* Loading Skeleton */}
-      {isLoading && !data && (
-        <div className="card skeleton" style={{ height: '340px' }} />
-      )}
+      {/* Loading */}
+      {isLoading && !data && <div className="card skeleton" style={{ height: '320px' }} />}
 
-      {/* Empty State when no active token exists */}
+      {/* No token */}
       {!isLoading && !token && (
         <div className="card empty-state fade-in">
-          <div className="empty-state-icon">
-            <IconToken />
-          </div>
-          <div className="empty-state-title">No Active Token</div>
-          <p className="empty-state-subtitle">
-            You do not currently have a waiting or active token in line.
-          </p>
-          <button
-            onClick={() => router.push('/')}
-            className="btn btn-primary"
-          >
-            View Offices & Get Token
+          <div className="empty-icon"><i className="fa-solid fa-ticket" /></div>
+          <div className="empty-title">No active token</div>
+          <p className="empty-sub">You are not currently in any queue.</p>
+          <button className="btn btn-primary" onClick={() => router.push('/')}>
+            <i className="fa-solid fa-arrow-left" /> Go to Offices
           </button>
         </div>
       )}
 
-      {/* Active Token Card */}
+      {/* Active token */}
       {token && (
         <div className="fade-in">
-          {/* Urgent Notification Banners */}
+          {/* Alert banners */}
           {token.alertLevel === 'now' && (
-            <div className="alert-banner alert-banner-now">
-              <IconAlert />
-              <span>
-                <strong>Your turn has arrived!</strong> Please approach the {token.service?.name} desk immediately.
-              </span>
+            <div className="alert-now" style={{ marginBottom: '1rem' }}>
+              <i className="fa-solid fa-bell" />
+              <span><strong>Your turn!</strong> Please approach the {token.service?.name} desk now.</span>
             </div>
           )}
-
           {token.alertLevel === 'near' && (
-            <div className="alert-banner alert-banner-near">
-              <IconClock />
-              <span>
-                <strong>Your turn is approaching!</strong> You are {getOrdinal(token.position)} in line. Please remain near the office.
-              </span>
+            <div className="alert-near" style={{ marginBottom: '1rem' }}>
+              <i className="fa-solid fa-clock" />
+              <span><strong>Almost your turn.</strong> You are {getOrdinal(token.position)} in line.</span>
             </div>
           )}
 
-          {/* Ticket Card */}
-          <div
-            className="card"
-            style={{
-              textAlign: 'center',
-              padding: '2rem 1.5rem',
-              borderTop: token.status === 'serving' ? '4px solid var(--accent)' : '4px solid var(--primary)',
-            }}
-          >
-            {/* Office Badge */}
+          {/* Ticket card */}
+          <div className="card" style={{
+            textAlign: 'center', padding: '2rem 1.5rem',
+            borderTop: `4px solid ${token.status === 'serving' ? 'var(--accent)' : 'var(--primary)'}`,
+          }}>
+            {/* Office */}
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
-              <span
-                style={{
-                  backgroundColor: '#F3F4F6',
-                  color: 'var(--primary-dark)',
-                  fontWeight: 800,
-                  fontSize: '0.78rem',
-                  padding: '0.2rem 0.5rem',
-                  borderRadius: '4px',
-                  border: '1px solid var(--border)',
-                }}
-                className="tabular-nums"
-              >
-                {token.service?.prefix}
-              </span>
-              <span style={{ fontWeight: 700, fontSize: '0.95rem', color: 'var(--text)' }}>
-                {token.service?.name}
-              </span>
+              <span style={{
+                background: 'var(--muted-bg)', border: '1px solid var(--border)',
+                fontWeight: 800, fontSize: '0.75rem', padding: '0.15rem 0.4rem',
+                borderRadius: 'var(--r-sm)',
+              }}>{token.service?.prefix}</span>
+              <span style={{ fontWeight: 600, fontSize: '0.9rem' }}>{token.service?.name}</span>
             </div>
 
-            {/* Token Code */}
+            {/* Token code */}
             <div
-              className={`tabular-nums ${token.status === 'serving' ? 'token-number-hero' : 'token-number'}`}
+              className={`tabular-nums ${token.status === 'serving' ? 'token-hero' : 'token-num'}`}
               style={{ margin: '0.75rem 0' }}
             >
               {token.token_code}
             </div>
 
-            {/* Status Pill */}
+            {/* Status */}
             <div style={{ marginBottom: '1.25rem' }}>
-              <span className={`badge ${token.status === 'serving' ? 'badge-serving' : 'badge-waiting'}`}>
-                <span className="status-dot"></span>
-                <span>{token.status === 'serving' ? 'Now Serving' : 'Waiting in Queue'}</span>
+              <span className={`badge ${token.status === 'serving' ? 'badge-serving' : 'badge-blue'}`}>
+                <span className="status-dot" />
+                {token.status === 'serving' ? 'Now Serving' : 'Waiting'}
               </span>
             </div>
 
-            {/* Purpose Tag */}
+            {/* Purpose */}
             {token.purpose && (
-              <div
-                style={{
-                  backgroundColor: 'var(--surface-muted)',
-                  border: '1px solid var(--border)',
-                  borderRadius: 'var(--radius-sm)',
-                  padding: '0.5rem 0.85rem',
-                  fontSize: '0.85rem',
-                  color: 'var(--text)',
-                  marginBottom: '1.25rem',
-                  display: 'inline-block',
-                }}
-              >
+              <div style={{
+                display: 'inline-block',
+                background: 'var(--muted-bg)', border: '1px solid var(--border)',
+                borderRadius: 'var(--r-sm)', padding: '0.4rem 0.75rem',
+                fontSize: '0.85rem', marginBottom: '1.25rem',
+              }}>
                 Purpose: <strong>{token.purpose}</strong>
               </div>
             )}
 
-            {/* Queue Position and Wait Metrics */}
+            {/* Waiting stats */}
             {token.status === 'waiting' ? (
               <>
-                <div
-                  className="inset-box"
-                  style={{
-                    display: 'grid',
-                    gridTemplateColumns: '1fr 1fr',
-                    gap: '1rem',
-                    padding: '1.25rem 1rem',
-                    marginBottom: '1.25rem',
-                  }}
-                >
+                <div className="inset" style={{
+                  display: 'grid', gridTemplateColumns: '1fr 1fr',
+                  gap: '1rem', padding: '1.1rem 0.9rem', marginBottom: '1.25rem',
+                }}>
                   <div style={{ borderRight: '1px solid var(--border)' }}>
-                    <div className="text-xs" style={{ color: 'var(--muted)', marginBottom: '0.25rem' }}>
-                      Position in Line
-                    </div>
-                    <div style={{ fontSize: '1.65rem', fontWeight: 800, color: 'var(--primary-dark)' }} className="tabular-nums">
+                    <div className="text-xs text-muted" style={{ marginBottom: '0.2rem' }}>Position</div>
+                    <div style={{ fontSize: '1.6rem', fontWeight: 800 }} className="tabular-nums">
                       {getOrdinal(token.position)}
                     </div>
                     <div className="text-muted text-sm" style={{ fontSize: '0.78rem' }}>
-                      {token.peopleAhead === 0 ? 'Next to be called' : `${token.peopleAhead} student${token.peopleAhead > 1 ? 's' : ''} ahead`}
+                      {token.peopleAhead === 0 ? 'Next up' : `${token.peopleAhead} ahead`}
                     </div>
                   </div>
-
                   <div>
-                    <div className="text-xs" style={{ color: 'var(--muted)', marginBottom: '0.25rem' }}>
-                      Estimated Wait
+                    <div className="text-xs text-muted" style={{ marginBottom: '0.2rem' }}>Est. Wait</div>
+                    <div style={{ fontSize: '1.6rem', fontWeight: 800 }} className="tabular-nums">
+                      ~{token.estimatedWaitMinutes}m
                     </div>
-                    <div style={{ fontSize: '1.65rem', fontWeight: 800, color: 'var(--primary-dark)' }} className="tabular-nums">
-                      ~{token.estimatedWaitMinutes} min
-                    </div>
-                    <div className="text-muted text-sm" style={{ fontSize: '0.78rem' }}>
-                      Based on current desk pace
-                    </div>
+                    <div className="text-muted text-sm" style={{ fontSize: '0.78rem' }}>approx.</div>
                   </div>
                 </div>
 
-                {/* Line Progress Visualizer */}
+                {/* Progress */}
                 <div style={{ textAlign: 'left', marginBottom: '1.5rem' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', marginBottom: '0.25rem' }} className="text-muted">
-                    <span>Queue Entry</span>
-                    <span>Counter Desk</span>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.73rem', marginBottom: '0.3rem' }} className="text-muted">
+                    <span>Joined</span><span>Desk</span>
                   </div>
-                  <div className="progress-bar">
-                    <div
-                      className="progress-bar-fill"
-                      style={{
-                        width: `${Math.max(15, 100 - (token.peopleAhead * 20))}%`,
-                        backgroundColor: token.alertLevel === 'near' ? 'var(--accent)' : 'var(--waiting)',
-                      }}
-                    />
+                  <div className="progress-track">
+                    <div className="progress-fill" style={{
+                      width: `${Math.max(10, 100 - (token.peopleAhead * 20))}%`,
+                      background: token.alertLevel === 'near' ? 'var(--accent)' : 'var(--blue)',
+                    }} />
                   </div>
                 </div>
 
-                {/* Cancel Button */}
-                <button
-                  onClick={() => setShowCancelModal(true)}
-                  className="btn btn-danger-outline btn-block"
-                >
-                  <IconCancel />
-                  <span>Cancel My Token</span>
+                <button className="btn btn-danger-outline btn-block" onClick={() => setShowCancelModal(true)}>
+                  <i className="fa-solid fa-xmark" /> Cancel Token
                 </button>
               </>
             ) : (
-              <div
-                style={{
-                  padding: '1.5rem 1rem',
-                  backgroundColor: 'var(--accent-light)',
-                  border: '1px solid var(--accent-border)',
-                  borderRadius: 'var(--radius-sm)',
-                  marginTop: '0.5rem',
-                }}
-              >
-                <div style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--accent)', marginBottom: '0.35rem' }}>
-                  Please approach the counter desk now
+              <div style={{
+                padding: '1.25rem', background: '#FFF7F3',
+                border: '1px solid #FCDAC8', borderRadius: 'var(--r-sm)', marginTop: '0.5rem',
+              }}>
+                <div style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--accent)', marginBottom: '0.3rem' }}>
+                  Please approach the counter now
                 </div>
-                <p className="text-muted text-sm" style={{ color: '#8F3200' }}>
-                  Your token has been announced by the officer. Please present your college ID card.
-                </p>
+                <p className="text-muted text-sm">Present your college ID when called.</p>
               </div>
             )}
           </div>
         </div>
       )}
 
-      {/* Confirmation Modal for Token Cancellation */}
       <ConfirmModal
         isOpen={showCancelModal}
         title="Cancel Token?"
-        message={`Are you sure you want to cancel token ${token?.token_code}? Your current position (${getOrdinal(token?.position)}) in the queue will be surrendered.`}
-        confirmLabel="Yes, Cancel Token"
-        cancelLabel="Keep My Spot"
+        message={`Cancel ${token?.token_code}? You will lose your position (${getOrdinal(token?.position)}) in queue.`}
+        confirmLabel="Yes, Cancel"
+        cancelLabel="Keep Spot"
         isDanger={true}
         isLoading={isCancelling}
         onConfirm={handleCancelToken}

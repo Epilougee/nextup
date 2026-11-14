@@ -220,7 +220,7 @@ export default function AdminAnalyticsPage() {
           <div className="text-muted text-sm" style={{ marginBottom: '0.35rem' }}>
             Average Wait Time
           </div>
-          <div style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--waiting)' }} className="tabular-nums">
+          <div style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--blue)' }} className="tabular-nums">
             {summary.avgWaitMinutes} min
           </div>
           <div className="text-muted text-sm" style={{ fontSize: '0.8rem', marginTop: '0.25rem' }}>
@@ -232,7 +232,7 @@ export default function AdminAnalyticsPage() {
           <div className="text-muted text-sm" style={{ marginBottom: '0.35rem' }}>
             Average Service Time
           </div>
-          <div style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--completed)' }} className="tabular-nums">
+          <div style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--green)' }} className="tabular-nums">
             {summary.avgServiceMinutes} min
           </div>
           <div className="text-muted text-sm" style={{ fontSize: '0.8rem', marginTop: '0.25rem' }}>
@@ -244,7 +244,7 @@ export default function AdminAnalyticsPage() {
           <div className="text-muted text-sm" style={{ marginBottom: '0.35rem' }}>
             No-Show Rate
           </div>
-          <div style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--noshow)' }} className="tabular-nums">
+          <div style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--red)' }} className="tabular-nums">
             {summary.noShowRate}
           </div>
           <div className="text-muted text-sm" style={{ fontSize: '0.8rem', marginTop: '0.25rem' }}>

@@ -80,11 +80,11 @@ export default function HistoryPage() {
 
       {!isLoading && history.length === 0 && (
         <div className="card empty-state fade-in">
-          <div className="empty-state-icon">
+          <div className="empty-icon">
             <IconHistory />
           </div>
-          <div className="empty-state-title">No Past Tokens</div>
-          <p className="empty-state-subtitle">
+          <div className="empty-title">No Past Tokens</div>
+          <p className="empty-sub">
             You have not requested any administration tokens yet.
           </p>
           <button

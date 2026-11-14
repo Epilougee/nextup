@@ -327,20 +327,14 @@ function AdminQueueContent() {
           {nowServing ? (
             <div>
               <div style={{ display: 'flex', alignItems: 'baseline', gap: '1rem', flexWrap: 'wrap' }}>
-                <div className="token-number-hero">{nowServing.token_code}</div>
+                <div className="token-hero tabular-nums">{nowServing.token_code}</div>
                 <div>
                   <div style={{ fontSize: '1.15rem', fontWeight: 600 }}>{nowServing.student_name}</div>
                   <div className="text-muted text-sm">{nowServing.student_email}</div>
                 </div>
               </div>
 
-              <div
-                className="inset-box"
-                style={{
-                  margin: '1.25rem 0',
-                  fontSize: '0.875rem',
-                }}
-              >
+              <div className="inset" style={{ margin: '1.25rem 0', fontSize: '0.875rem' }}>
                 <span className="text-xs" style={{ color: 'var(--muted)', display: 'block', marginBottom: '0.2rem' }}>
                   Student Purpose of Visit:
                 </span>
@@ -399,10 +393,8 @@ function AdminQueueContent() {
             </div>
           ) : (
             <div className="empty-state" style={{ padding: '2rem 1rem' }}>
-              <div className="empty-state-title">Desk is Currently Clear</div>
-              <p className="empty-state-subtitle">
-                No student is currently being served at this counter.
-              </p>
+              <div className="empty-title">Desk is Currently Clear</div>
+              <p className="empty-sub">No student is currently being served at this counter.</p>
             </div>
           )}
         </div>
@@ -471,10 +463,8 @@ function AdminQueueContent() {
 
         {waitingList.length === 0 ? (
           <div className="empty-state" style={{ padding: '2rem' }}>
-            <div className="empty-state-title">No Waiting Tokens</div>
-            <p className="empty-state-subtitle">
-              All students have been served or no tokens have been taken yet today.
-            </p>
+            <div className="empty-title">No Waiting Tokens</div>
+              <p className="empty-sub">Queue is empty.</p>
           </div>
         ) : (
           <div className="table-container">

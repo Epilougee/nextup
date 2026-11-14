@@ -121,8 +121,8 @@ export default function PublicDisplayPage() {
 
       {!isLoading && tiles.length === 0 && (
         <div className="card empty-state" style={{ margin: 'auto' }}>
-          <div className="empty-state-title">All Administration Desks Currently Closed</div>
-          <p className="empty-state-subtitle">
+          <div className="empty-title">All Administration Desks Currently Closed</div>
+          <p className="empty-sub">
             Counter hours resume tomorrow at 10:00 AM IST.
           </p>
         </div>
@@ -170,7 +170,7 @@ export default function PublicDisplayPage() {
 
               {/* Now Serving Inset Display */}
               <div
-                className="inset-box"
+                className="inset"
                 style={{
                   textAlign: 'center',
                   margin: '1.25rem 0',
@@ -193,7 +193,7 @@ export default function PublicDisplayPage() {
                 </div>
 
                 <div
-                  className={`tabular-nums ${tile.isServing ? 'token-number-hero' : 'token-number'}`}
+                  className={`tabular-nums ${tile.isServing ? 'token-hero' : 'token-num'}`}
                   style={{
                     fontSize: tile.isServing ? '4.25rem' : '3rem',
                     color: tile.isServing ? 'var(--accent)' : 'var(--muted)',
