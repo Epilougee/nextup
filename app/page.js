@@ -6,37 +6,33 @@ import StudentLayout from '@/components/StudentLayout';
 import ReconnectingPill from '@/components/ReconnectingPill';
 import { usePolling } from '@/components/usePolling';
 import { DEPARTMENT_CATALOG } from '@/lib/departmentCatalog';
+import { IconCheck, IconClose, IconSpinner, IconPrint } from '@/components/Icons';
 
 const DEPT_THEMES = {
   ACC: {
     color: '#059669',
     bg: '#ECFDF5',
     border: '#A7F3D0',
-    icon: 'fa-solid fa-receipt',
   },
   EXM: {
     color: '#2563EB',
     bg: '#EFF6FF',
     border: '#BFDBFE',
-    icon: 'fa-solid fa-graduation-cap',
   },
   ADM: {
     color: '#7C3AED',
     bg: '#F5F3FF',
     border: '#DDD6FE',
-    icon: 'fa-solid fa-id-card',
   },
   LIB: {
     color: '#D97706',
     bg: '#FFFBEB',
     border: '#FDE68A',
-    icon: 'fa-solid fa-book-open',
   },
   DEN: {
     color: '#0891B2',
     bg: '#ECFEFF',
     border: '#A5F3FC',
-    icon: 'fa-solid fa-building-columns',
   },
 };
 
@@ -163,9 +159,11 @@ export default function StudentHomePage() {
           marginBottom: '1.25rem', fontSize: '0.85rem', display: 'flex',
           justifyContent: 'space-between', alignItems: 'center',
         }}>
-          <span><i className="fa-solid fa-check" style={{ marginRight: '0.5rem' }} />{successMsg}</span>
+          <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <IconCheck /> {successMsg}
+          </span>
           <button onClick={() => setSuccessMsg('')} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'inherit', fontSize: '1rem' }}>
-            <i className="fa-solid fa-xmark" />
+            <IconClose />
           </button>
         </div>
       )}
@@ -173,13 +171,13 @@ export default function StudentHomePage() {
       {/* Underline Tabs */}
       <div className="tabs">
         <button className={`tab-btn${activeTab === 'digital' ? ' active' : ''}`} onClick={() => setActiveTab('digital')}>
-          <i className="fa-solid fa-bolt" style={{ fontSize: '0.8rem', marginRight: '0.2rem' }} /> Digital Documents
+          Digital Documents
         </button>
         <button className={`tab-btn${activeTab === 'physical' ? ' active' : ''}`} onClick={() => setActiveTab('physical')}>
-          <i className="fa-solid fa-ticket" style={{ fontSize: '0.8rem', marginRight: '0.2rem' }} /> Counter Desks
+          Counter Desks
         </button>
         <button className={`tab-btn${activeTab === 'my-docs' ? ' active' : ''}`} onClick={() => setActiveTab('my-docs')}>
-          <i className="fa-solid fa-folder-open" style={{ fontSize: '0.8rem', marginRight: '0.2rem' }} /> My Documents
+          My Documents
           {myDigitalDocs.length > 0 && (
             <span style={{
               marginLeft: '0.4rem',
@@ -196,19 +194,19 @@ export default function StudentHomePage() {
         </button>
       </div>
 
-      {/* TAB 1: Digital Documents */}
+      {/* TAB 1: Digital Documents — Short Colored Notations, No Empty Boxes */}
       {activeTab === 'digital' && (
         <div className="fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
           {DEPARTMENT_CATALOG.map((dept) => {
             const docs = dept.items.filter((i) => i.type === 'digital');
             if (!docs.length) return null;
             const theme = DEPT_THEMES[dept.prefix] || {
-              color: '#4B5563', bg: '#F3F4F6', border: '#E5E7EB', icon: 'fa-solid fa-building',
+              color: '#4B5563', bg: '#F3F4F6', border: '#E5E7EB',
             };
 
             return (
               <div key={dept.prefix} className="card" style={{ padding: 0, overflow: 'hidden' }}>
-                {/* Department Section Header with Colored Icon */}
+                {/* Department Section Header with Colored Short Notation */}
                 <div style={{
                   padding: '0.85rem 1.25rem',
                   background: '#FAFAF9',
@@ -217,64 +215,36 @@ export default function StudentHomePage() {
                   alignItems: 'center',
                   justifyContent: 'space-between',
                 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                    <div style={{
-                      width: '32px',
-                      height: '32px',
-                      borderRadius: '6px',
-                      background: theme.bg,
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+                    <span style={{
+                      fontWeight: 800,
+                      fontSize: '0.8rem',
                       color: theme.color,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontSize: '0.85rem',
-                      flexShrink: 0,
+                      background: theme.bg,
+                      border: `1px solid ${theme.border}`,
+                      padding: '0.22rem 0.55rem',
+                      borderRadius: '5px',
+                      letterSpacing: '0.04em',
                     }}>
-                      <i className={theme.icon} />
-                    </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                      <span style={{ fontWeight: 600, fontSize: '0.98rem', color: 'var(--primary-dk)' }}>{dept.name}</span>
-                      <span className="tabular-nums" style={{
-                        fontSize: '0.72rem',
-                        fontWeight: 700,
-                        color: theme.color,
-                        background: theme.bg,
-                        padding: '0.1rem 0.45rem',
-                        borderRadius: '4px',
-                        border: `1px solid ${theme.border}`,
-                      }}>{dept.prefix}</span>
-                    </div>
+                      {dept.prefix}
+                    </span>
+                    <span style={{ fontWeight: 600, fontSize: '0.98rem', color: 'var(--primary-dk)' }}>
+                      {dept.name}
+                    </span>
                   </div>
-                  <span className="text-muted text-xs">{docs.length} document{docs.length > 1 ? 's' : ''} available</span>
+                  <span className="text-muted text-xs">{docs.length} document{docs.length > 1 ? 's' : ''}</span>
                 </div>
 
-                {/* Document List Rows */}
+                {/* Document List Rows — Clean text, no empty boxes */}
                 <div>
                   {docs.map((doc) => (
                     <div key={doc.id} className="list-row">
-                      <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.85rem', flex: 1, minWidth: 0 }}>
-                        <div style={{
-                          width: '32px',
-                          height: '32px',
-                          borderRadius: '6px',
-                          background: '#F1F5F9',
-                          color: '#475569',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          fontSize: '0.85rem',
-                          flexShrink: 0,
-                          marginTop: '0.1rem',
-                        }}>
-                          <i className="fa-regular fa-file-lines" />
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{ fontWeight: 600, fontSize: '0.93rem', color: 'var(--primary-dk)', marginBottom: '0.2rem' }}>
+                          {doc.title}
                         </div>
-                        <div style={{ flex: 1, minWidth: 0 }}>
-                          <div style={{ fontWeight: 600, fontSize: '0.92rem', color: 'var(--primary-dk)', marginBottom: '0.2rem' }}>
-                            {doc.title}
-                          </div>
-                          <div className="text-muted text-sm" style={{ lineHeight: 1.45 }}>
-                            {doc.description}
-                          </div>
+                        <div className="text-muted text-sm" style={{ lineHeight: 1.45 }}>
+                          {doc.description}
                         </div>
                       </div>
 
@@ -321,41 +291,28 @@ export default function StudentHomePage() {
             const canTake = svc.canTake?.ok;
             const rejectReason = svc.canTake?.reason;
             const theme = DEPT_THEMES[svc.prefix] || {
-              color: '#4B5563', bg: '#F3F4F6', border: '#E5E7EB', icon: 'fa-solid fa-building',
+              color: '#4B5563', bg: '#F3F4F6', border: '#E5E7EB',
             };
 
             return (
               <div key={svc.id} className="card" style={{ padding: '1.25rem' }}>
-                {/* Office Header */}
+                {/* Office Header with Colored Notation */}
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.9rem' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                    <div style={{
-                      width: '32px',
-                      height: '32px',
-                      borderRadius: '6px',
-                      background: theme.bg,
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+                    <span style={{
+                      fontWeight: 800,
+                      fontSize: '0.8rem',
                       color: theme.color,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontSize: '0.85rem',
-                      flexShrink: 0,
+                      background: theme.bg,
+                      border: `1px solid ${theme.border}`,
+                      padding: '0.22rem 0.55rem',
+                      borderRadius: '5px',
+                      letterSpacing: '0.04em',
                     }}>
-                      <i className={theme.icon} />
-                    </div>
+                      {svc.prefix}
+                    </span>
                     <div>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
-                        <h3 style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--primary-dk)' }}>{svc.name}</h3>
-                        <span className="tabular-nums" style={{
-                          fontSize: '0.72rem',
-                          fontWeight: 700,
-                          color: theme.color,
-                          background: theme.bg,
-                          padding: '0.1rem 0.4rem',
-                          borderRadius: '4px',
-                          border: `1px solid ${theme.border}`,
-                        }}>{svc.prefix}</span>
-                      </div>
+                      <h3 style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--primary-dk)' }}>{svc.name}</h3>
                       <div className="text-muted text-sm">
                         Hours: {svc.open_time?.slice(0, 5)} – {svc.close_time?.slice(0, 5)} IST
                       </div>
@@ -446,7 +403,6 @@ export default function StudentHomePage() {
             </div>
           ) : myDigitalDocs.length === 0 ? (
             <div className="card empty-state">
-              <div className="empty-icon"><i className="fa-solid fa-file-lines" /></div>
               <div className="empty-title">No documents issued yet</div>
               <p className="empty-sub">Switch to the Digital Documents tab to apply online.</p>
               <button className="btn btn-accent" onClick={() => setActiveTab('digital')}>
@@ -457,28 +413,25 @@ export default function StudentHomePage() {
             <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
               {myDigitalDocs.map((doc) => (
                 <div key={doc.id} className="list-row">
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', flex: 1, minWidth: 0 }}>
-                    <div style={{
-                      width: '32px',
-                      height: '32px',
-                      borderRadius: '6px',
-                      background: '#ECFDF5',
-                      color: '#059669',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontSize: '0.9rem',
-                      flexShrink: 0,
-                    }}>
-                      <i className="fa-solid fa-file-circle-check" />
-                    </div>
-                    <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{ fontWeight: 600, fontSize: '0.92rem', color: 'var(--primary-dk)' }}>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '0.25rem' }}>
+                      <span style={{
+                        fontWeight: 700,
+                        fontSize: '0.75rem',
+                        color: '#059669',
+                        background: '#ECFDF5',
+                        border: '1px solid #A7F3D0',
+                        padding: '0.15rem 0.45rem',
+                        borderRadius: '4px',
+                      }}>
+                        {doc.reference_no}
+                      </span>
+                      <span style={{ fontWeight: 600, fontSize: '0.93rem', color: 'var(--primary-dk)' }}>
                         {doc.doc_title}
-                      </div>
-                      <div className="text-muted text-sm" style={{ marginTop: '0.2rem' }}>
-                        Ref: <strong className="tabular-nums" style={{ color: 'var(--primary-dk)' }}>{doc.reference_no}</strong> · {doc.service?.name || 'Academic Office'} · {doc.purpose}
-                      </div>
+                      </span>
+                    </div>
+                    <div className="text-muted text-sm">
+                      {doc.service?.name || 'Academic Office'} · {doc.purpose}
                     </div>
                   </div>
 
@@ -512,7 +465,7 @@ export default function StudentHomePage() {
                   onClick={() => setSelectedDocItem(null)}
                   style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--muted)', fontSize: '1.1rem', padding: '0.2rem' }}
                 >
-                  <i className="fa-solid fa-xmark" />
+                  <IconClose />
                 </button>
               </div>
             </div>
@@ -541,7 +494,7 @@ export default function StudentHomePage() {
               <div className="modal-actions">
                 <button type="button" className="btn btn-outline btn-sm" onClick={() => setSelectedDocItem(null)} disabled={isIssuingDoc}>Cancel</button>
                 <button type="submit" className="btn btn-accent btn-sm" disabled={isIssuingDoc} style={{ minWidth: '120px', fontWeight: 600 }}>
-                  {isIssuingDoc ? <><i className="fa-solid fa-spinner fa-spin" /> Issuing…</> : 'Issue Document'}
+                  {isIssuingDoc ? <><IconSpinner /> Issuing…</> : 'Issue Document'}
                 </button>
               </div>
             </form>
@@ -565,7 +518,7 @@ export default function StudentHomePage() {
                   onClick={() => setSelectedPhysicalService(null)}
                   style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--muted)', fontSize: '1.1rem', padding: '0.2rem' }}
                 >
-                  <i className="fa-solid fa-xmark" />
+                  <IconClose />
                 </button>
               </div>
             </div>
@@ -586,7 +539,7 @@ export default function StudentHomePage() {
               <div className="modal-actions">
                 <button type="button" className="btn btn-outline btn-sm" onClick={() => setSelectedPhysicalService(null)} disabled={isSubmittingToken}>Cancel</button>
                 <button type="submit" className="btn btn-accent btn-sm" disabled={isSubmittingToken} style={{ minWidth: '120px', fontWeight: 600 }}>
-                  {isSubmittingToken ? <><i className="fa-solid fa-spinner fa-spin" /> Issuing…</> : 'Confirm Token'}
+                  {isSubmittingToken ? <><IconSpinner /> Issuing…</> : 'Confirm Token'}
                 </button>
               </div>
             </form>
@@ -599,11 +552,11 @@ export default function StudentHomePage() {
         <div className="modal-backdrop" onClick={() => setViewingDoc(null)}>
           <div className="modal-card modal-card-lg fade-in" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true" style={{ maxHeight: '90vh', overflowY: 'auto' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-              <span style={{ fontWeight: 600, fontSize: '0.9rem', color: 'var(--green)' }}>
-                <i className="fa-solid fa-check" style={{ marginRight: '0.35rem' }} /> Verified E-Document
+              <span style={{ fontWeight: 600, fontSize: '0.9rem', color: 'var(--green)', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                <IconCheck /> Verified E-Document
               </span>
               <button onClick={() => setViewingDoc(null)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--muted)', fontSize: '1.1rem' }}>
-                <i className="fa-solid fa-xmark" />
+                <IconClose />
               </button>
             </div>
 
@@ -653,7 +606,6 @@ export default function StudentHomePage() {
                 display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem',
               }}>
                 <div className="certificate-seal">
-                  <i className="fa-solid fa-shield-halved" />
                   <div>
                     <div>DIGITALLY VERIFIED CREDENTIAL</div>
                     <div style={{ fontSize: '0.7rem', fontWeight: 600, color: '#047857' }}>
@@ -672,7 +624,7 @@ export default function StudentHomePage() {
             <div className="modal-actions" style={{ marginTop: '1rem' }}>
               <button className="btn btn-outline btn-sm" onClick={() => setViewingDoc(null)}>Close</button>
               <button className="btn btn-accent btn-sm" onClick={() => window.print()} style={{ fontWeight: 600 }}>
-                <i className="fa-solid fa-print" style={{ marginRight: '0.35rem' }} /> Print / PDF
+                <IconPrint style={{ marginRight: '0.35rem' }} /> Print / PDF
               </button>
             </div>
           </div>
