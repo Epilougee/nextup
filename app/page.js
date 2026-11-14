@@ -7,6 +7,39 @@ import ReconnectingPill from '@/components/ReconnectingPill';
 import { usePolling } from '@/components/usePolling';
 import { DEPARTMENT_CATALOG } from '@/lib/departmentCatalog';
 
+const DEPT_THEMES = {
+  ACC: {
+    color: '#059669',
+    bg: '#ECFDF5',
+    border: '#A7F3D0',
+    icon: 'fa-solid fa-receipt',
+  },
+  EXM: {
+    color: '#2563EB',
+    bg: '#EFF6FF',
+    border: '#BFDBFE',
+    icon: 'fa-solid fa-graduation-cap',
+  },
+  ADM: {
+    color: '#7C3AED',
+    bg: '#F5F3FF',
+    border: '#DDD6FE',
+    icon: 'fa-solid fa-id-card',
+  },
+  LIB: {
+    color: '#D97706',
+    bg: '#FFFBEB',
+    border: '#FDE68A',
+    icon: 'fa-solid fa-book-open',
+  },
+  DEN: {
+    color: '#0891B2',
+    bg: '#ECFEFF',
+    border: '#A5F3FC',
+    icon: 'fa-solid fa-building-columns',
+  },
+};
+
 export default function StudentHomePage() {
   const router = useRouter();
   const [currentUser, setCurrentUser] = useState(null);
@@ -72,7 +105,7 @@ export default function StudentHomePage() {
         body: JSON.stringify({
           doc_type: selectedDocItem.id,
           service_prefix: selectedDeptPrefix,
-          purpose: docPurpose || 'Official Use',
+          purpose: docPurpose || 'Official Academic Use',
           custom_fields: { roll_no: rollNo, semester },
         }),
       });
@@ -109,14 +142,16 @@ export default function StudentHomePage() {
     <StudentLayout user={currentUser}>
       <ReconnectingPill show={isReconnecting} />
 
-      {/* Clean Flat Header — no outer card box */}
+      {/* Clean Flat Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
         <div>
-          <h1 style={{ fontSize: '1.35rem', fontWeight: 700, color: 'var(--primary-dk)' }}>Student Services</h1>
-          <p className="text-muted text-sm">Issue verified documents online or take in-person counter tokens.</p>
+          <h1 style={{ fontSize: '1.4rem', fontWeight: 700, color: 'var(--primary-dk)' }}>Student Services</h1>
+          <p className="text-muted text-sm">Instant digital document clearance and counter queue tokens.</p>
         </div>
         {currentUser && (
-          <span className="text-muted text-sm tabular-nums">{currentUser.name}</span>
+          <span className="text-muted text-sm tabular-nums" style={{ fontWeight: 500 }}>
+            {currentUser.name}
+          </span>
         )}
       </div>
 
@@ -125,7 +160,7 @@ export default function StudentHomePage() {
         <div style={{
           background: 'var(--green-bg)', border: '1px solid var(--green-bd)',
           color: 'var(--green)', borderRadius: 'var(--r-sm)', padding: '0.65rem 1rem',
-          marginBottom: '1rem', fontSize: '0.85rem', display: 'flex',
+          marginBottom: '1.25rem', fontSize: '0.85rem', display: 'flex',
           justifyContent: 'space-between', alignItems: 'center',
         }}>
           <span><i className="fa-solid fa-check" style={{ marginRight: '0.5rem' }} />{successMsg}</span>
@@ -138,75 +173,121 @@ export default function StudentHomePage() {
       {/* Underline Tabs */}
       <div className="tabs">
         <button className={`tab-btn${activeTab === 'digital' ? ' active' : ''}`} onClick={() => setActiveTab('digital')}>
-          Digital Documents
+          <i className="fa-solid fa-bolt" style={{ fontSize: '0.8rem', marginRight: '0.2rem' }} /> Digital Documents
         </button>
         <button className={`tab-btn${activeTab === 'physical' ? ' active' : ''}`} onClick={() => setActiveTab('physical')}>
-          Counter Desks
+          <i className="fa-solid fa-ticket" style={{ fontSize: '0.8rem', marginRight: '0.2rem' }} /> Counter Desks
         </button>
         <button className={`tab-btn${activeTab === 'my-docs' ? ' active' : ''}`} onClick={() => setActiveTab('my-docs')}>
-          My Documents {myDigitalDocs.length > 0 && `(${myDigitalDocs.length})`}
+          <i className="fa-solid fa-folder-open" style={{ fontSize: '0.8rem', marginRight: '0.2rem' }} /> My Documents
+          {myDigitalDocs.length > 0 && (
+            <span style={{
+              marginLeft: '0.4rem',
+              background: activeTab === 'my-docs' ? 'var(--accent)' : 'var(--muted-bg)',
+              color: activeTab === 'my-docs' ? '#FFFFFF' : 'var(--muted)',
+              padding: '0.1rem 0.45rem',
+              borderRadius: '9999px',
+              fontSize: '0.72rem',
+              fontWeight: 700,
+            }}>
+              {myDigitalDocs.length}
+            </span>
+          )}
         </button>
       </div>
 
-      {/* TAB 1: Digital Documents — Clean Section Cards, no nested grey boxes, no capsules */}
+      {/* TAB 1: Digital Documents */}
       {activeTab === 'digital' && (
         <div className="fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
           {DEPARTMENT_CATALOG.map((dept) => {
             const docs = dept.items.filter((i) => i.type === 'digital');
             if (!docs.length) return null;
+            const theme = DEPT_THEMES[dept.prefix] || {
+              color: '#4B5563', bg: '#F3F4F6', border: '#E5E7EB', icon: 'fa-solid fa-building',
+            };
+
             return (
               <div key={dept.prefix} className="card" style={{ padding: 0, overflow: 'hidden' }}>
-                {/* Department Section Header */}
+                {/* Department Section Header with Colored Icon */}
                 <div style={{
-                  padding: '0.75rem 1.25rem',
-                  background: 'var(--muted-bg)',
+                  padding: '0.85rem 1.25rem',
+                  background: '#FAFAF9',
                   borderBottom: '1px solid var(--border)',
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '0.6rem',
+                  justifyContent: 'space-between',
                 }}>
-                  <span style={{
-                    fontWeight: 700,
-                    fontSize: '0.75rem',
-                    color: 'var(--muted)',
-                    letterSpacing: '0.04em',
-                  }}>{dept.prefix}</span>
-                  <span style={{ fontWeight: 600, fontSize: '0.95rem', color: 'var(--primary-dk)' }}>{dept.name}</span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                    <div style={{
+                      width: '32px',
+                      height: '32px',
+                      borderRadius: '6px',
+                      background: theme.bg,
+                      color: theme.color,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '0.85rem',
+                      flexShrink: 0,
+                    }}>
+                      <i className={theme.icon} />
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                      <span style={{ fontWeight: 600, fontSize: '0.98rem', color: 'var(--primary-dk)' }}>{dept.name}</span>
+                      <span className="tabular-nums" style={{
+                        fontSize: '0.72rem',
+                        fontWeight: 700,
+                        color: theme.color,
+                        background: theme.bg,
+                        padding: '0.1rem 0.45rem',
+                        borderRadius: '4px',
+                        border: `1px solid ${theme.border}`,
+                      }}>{dept.prefix}</span>
+                    </div>
+                  </div>
+                  <span className="text-muted text-xs">{docs.length} document{docs.length > 1 ? 's' : ''} available</span>
                 </div>
 
                 {/* Document List Rows */}
                 <div>
-                  {docs.map((doc, idx) => (
-                    <div
-                      key={doc.id}
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        gap: '1.5rem',
-                        padding: '1rem 1.25rem',
-                        borderBottom: idx === docs.length - 1 ? 'none' : '1px solid var(--border)',
-                      }}
-                    >
-                      <div style={{ flex: 1, minWidth: 0 }}>
-                        <div style={{ fontWeight: 600, fontSize: '0.92rem', color: 'var(--primary-dk)', marginBottom: '0.2rem' }}>
-                          {doc.title}
+                  {docs.map((doc) => (
+                    <div key={doc.id} className="list-row">
+                      <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.85rem', flex: 1, minWidth: 0 }}>
+                        <div style={{
+                          width: '32px',
+                          height: '32px',
+                          borderRadius: '6px',
+                          background: '#F1F5F9',
+                          color: '#475569',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          fontSize: '0.85rem',
+                          flexShrink: 0,
+                          marginTop: '0.1rem',
+                        }}>
+                          <i className="fa-regular fa-file-lines" />
                         </div>
-                        <div className="text-muted text-sm" style={{ lineHeight: 1.45 }}>
-                          {doc.description}
+                        <div style={{ flex: 1, minWidth: 0 }}>
+                          <div style={{ fontWeight: 600, fontSize: '0.92rem', color: 'var(--primary-dk)', marginBottom: '0.2rem' }}>
+                            {doc.title}
+                          </div>
+                          <div className="text-muted text-sm" style={{ lineHeight: 1.45 }}>
+                            {doc.description}
+                          </div>
                         </div>
                       </div>
 
-                      {/* Consistently Sized Issue Button */}
+                      {/* Vibrant Brand Accent Issue Button */}
                       <button
-                        className="btn btn-primary btn-sm"
+                        className="btn btn-accent btn-sm"
                         style={{
                           flexShrink: 0,
-                          minWidth: '78px',
+                          minWidth: '82px',
                           height: '35px',
-                          padding: '0 0.9rem',
+                          padding: '0 0.95rem',
                           fontSize: '0.85rem',
-                          fontWeight: 500,
+                          fontWeight: 600,
                         }}
                         onClick={() => {
                           setSelectedDocItem(doc);
@@ -231,7 +312,7 @@ export default function StudentHomePage() {
         <div className="fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           {queueLoading && !queueData && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              {[1, 2, 3].map((n) => <div key={n} className="card skeleton" style={{ height: '120px' }} />)}
+              {[1, 2, 3].map((n) => <div key={n} className="card skeleton" style={{ height: '130px' }} />)}
             </div>
           )}
 
@@ -239,36 +320,69 @@ export default function StudentHomePage() {
             const isOpen = svc.is_open;
             const canTake = svc.canTake?.ok;
             const rejectReason = svc.canTake?.reason;
+            const theme = DEPT_THEMES[svc.prefix] || {
+              color: '#4B5563', bg: '#F3F4F6', border: '#E5E7EB', icon: 'fa-solid fa-building',
+            };
 
             return (
-              <div key={svc.id} className="card" style={{ padding: '1.15rem 1.25rem' }}>
+              <div key={svc.id} className="card" style={{ padding: '1.25rem' }}>
                 {/* Office Header */}
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.85rem' }}>
-                  <div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.2rem' }}>
-                      <span style={{ fontWeight: 700, fontSize: '0.75rem', color: 'var(--muted)' }}>{svc.prefix}</span>
-                      <h3 style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--primary-dk)' }}>{svc.name}</h3>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.9rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                    <div style={{
+                      width: '32px',
+                      height: '32px',
+                      borderRadius: '6px',
+                      background: theme.bg,
+                      color: theme.color,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '0.85rem',
+                      flexShrink: 0,
+                    }}>
+                      <i className={theme.icon} />
                     </div>
-                    <div className="text-muted text-sm">
-                      Hours: {svc.open_time?.slice(0, 5)} – {svc.close_time?.slice(0, 5)} IST
+                    <div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
+                        <h3 style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--primary-dk)' }}>{svc.name}</h3>
+                        <span className="tabular-nums" style={{
+                          fontSize: '0.72rem',
+                          fontWeight: 700,
+                          color: theme.color,
+                          background: theme.bg,
+                          padding: '0.1rem 0.4rem',
+                          borderRadius: '4px',
+                          border: `1px solid ${theme.border}`,
+                        }}>{svc.prefix}</span>
+                      </div>
+                      <div className="text-muted text-sm">
+                        Hours: {svc.open_time?.slice(0, 5)} – {svc.close_time?.slice(0, 5)} IST
+                      </div>
                     </div>
                   </div>
+
                   <span style={{
-                    fontSize: '0.8rem',
+                    fontSize: '0.78rem',
                     fontWeight: 600,
-                    color: isOpen ? 'var(--green)' : 'var(--muted)',
+                    color: isOpen ? '#059669' : '#6B7280',
+                    background: isOpen ? '#ECFDF5' : '#F3F4F6',
+                    border: `1px solid ${isOpen ? '#A7F3D0' : '#E5E7EB'}`,
+                    padding: '0.2rem 0.55rem',
+                    borderRadius: '4px',
                   }}>
                     {isOpen ? '● Open' : 'Closed'}
                   </span>
                 </div>
 
-                {/* Inline Stats Row — no 3 heavy nested grey boxes */}
+                {/* Inline Stats Row */}
                 <div style={{
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '1.25rem',
-                  padding: '0.65rem 0.85rem',
-                  background: 'var(--muted-bg)',
+                  gap: '1.5rem',
+                  padding: '0.75rem 1rem',
+                  background: '#FAFAF9',
+                  border: '1px solid var(--border)',
                   borderRadius: 'var(--r-sm)',
                   marginBottom: '1rem',
                   fontSize: '0.85rem',
@@ -276,17 +390,17 @@ export default function StudentHomePage() {
                 }}>
                   <div>
                     <span className="text-muted">Now Serving: </span>
-                    <strong className="tabular-nums" style={{ color: svc.servingTokenCode ? 'var(--accent)' : 'inherit' }}>
+                    <strong className="tabular-nums" style={{ color: svc.servingTokenCode ? 'var(--accent)' : 'inherit', fontSize: '1.05rem' }}>
                       {svc.servingTokenCode || 'None'}
                     </strong>
                   </div>
-                  <div style={{ borderLeft: '1px solid var(--border)', paddingLeft: '1.25rem' }}>
+                  <div style={{ borderLeft: '1px solid var(--border)', paddingLeft: '1.5rem' }}>
                     <span className="text-muted">In Line: </span>
-                    <strong className="tabular-nums">{svc.waitingCount}</strong>
+                    <strong className="tabular-nums" style={{ color: 'var(--primary-dk)', fontSize: '1.05rem' }}>{svc.waitingCount}</strong>
                   </div>
-                  <div style={{ borderLeft: '1px solid var(--border)', paddingLeft: '1.25rem' }}>
+                  <div style={{ borderLeft: '1px solid var(--border)', paddingLeft: '1.5rem' }}>
                     <span className="text-muted">Est. Wait: </span>
-                    <strong className="tabular-nums">~{svc.estimatedWaitMinutes}m</strong>
+                    <strong className="tabular-nums" style={{ color: 'var(--primary-dk)', fontSize: '1.05rem' }}>~{svc.estimatedWaitMinutes}m</strong>
                   </div>
                 </div>
 
@@ -294,7 +408,7 @@ export default function StudentHomePage() {
                 {svc.activeToken ? (
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem' }}>
                     <span className="text-sm">
-                      Active token: <strong>{svc.activeToken.token_code}</strong>
+                      Your active token: <strong style={{ color: 'var(--accent)' }}>{svc.activeToken.token_code}</strong>
                     </span>
                     <button className="btn btn-outline btn-sm" onClick={() => router.push('/my-token')}>
                       View Live Position
@@ -303,7 +417,8 @@ export default function StudentHomePage() {
                 ) : (
                   <div>
                     <button
-                      className="btn btn-primary btn-block"
+                      className={`btn btn-block ${canTake ? 'btn-accent' : 'btn-outline'}`}
+                      style={{ minHeight: '40px', fontWeight: 600 }}
                       disabled={!canTake}
                       onClick={() => { setSelectedPhysicalService(svc); setTokenError(''); }}
                     >
@@ -334,35 +449,42 @@ export default function StudentHomePage() {
               <div className="empty-icon"><i className="fa-solid fa-file-lines" /></div>
               <div className="empty-title">No documents issued yet</div>
               <p className="empty-sub">Switch to the Digital Documents tab to apply online.</p>
-              <button className="btn btn-primary" onClick={() => setActiveTab('digital')}>
+              <button className="btn btn-accent" onClick={() => setActiveTab('digital')}>
                 Browse Documents
               </button>
             </div>
           ) : (
             <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
-              {myDigitalDocs.map((doc, idx) => (
-                <div
-                  key={doc.id}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    gap: '1.5rem',
-                    padding: '1rem 1.25rem',
-                    borderBottom: idx === myDigitalDocs.length - 1 ? 'none' : '1px solid var(--border)',
-                  }}
-                >
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontWeight: 600, fontSize: '0.92rem', color: 'var(--primary-dk)' }}>
-                      {doc.doc_title}
+              {myDigitalDocs.map((doc) => (
+                <div key={doc.id} className="list-row">
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', flex: 1, minWidth: 0 }}>
+                    <div style={{
+                      width: '32px',
+                      height: '32px',
+                      borderRadius: '6px',
+                      background: '#ECFDF5',
+                      color: '#059669',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '0.9rem',
+                      flexShrink: 0,
+                    }}>
+                      <i className="fa-solid fa-file-circle-check" />
                     </div>
-                    <div className="text-muted text-sm" style={{ marginTop: '0.2rem' }}>
-                      Ref: <strong className="tabular-nums">{doc.reference_no}</strong> · {doc.service?.name || 'Academic Office'} · {doc.purpose}
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ fontWeight: 600, fontSize: '0.92rem', color: 'var(--primary-dk)' }}>
+                        {doc.doc_title}
+                      </div>
+                      <div className="text-muted text-sm" style={{ marginTop: '0.2rem' }}>
+                        Ref: <strong className="tabular-nums" style={{ color: 'var(--primary-dk)' }}>{doc.reference_no}</strong> · {doc.service?.name || 'Academic Office'} · {doc.purpose}
+                      </div>
                     </div>
                   </div>
+
                   <button
                     className="btn btn-outline btn-sm"
-                    style={{ flexShrink: 0, minWidth: '78px', height: '35px' }}
+                    style={{ flexShrink: 0, minWidth: '78px', height: '35px', fontWeight: 600 }}
                     onClick={() => setViewingDoc(doc)}
                   >
                     View
@@ -418,7 +540,7 @@ export default function StudentHomePage() {
               </div>
               <div className="modal-actions">
                 <button type="button" className="btn btn-outline btn-sm" onClick={() => setSelectedDocItem(null)} disabled={isIssuingDoc}>Cancel</button>
-                <button type="submit" className="btn btn-primary btn-sm" disabled={isIssuingDoc}>
+                <button type="submit" className="btn btn-accent btn-sm" disabled={isIssuingDoc} style={{ minWidth: '120px', fontWeight: 600 }}>
                   {isIssuingDoc ? <><i className="fa-solid fa-spinner fa-spin" /> Issuing…</> : 'Issue Document'}
                 </button>
               </div>
@@ -463,7 +585,7 @@ export default function StudentHomePage() {
               </div>
               <div className="modal-actions">
                 <button type="button" className="btn btn-outline btn-sm" onClick={() => setSelectedPhysicalService(null)} disabled={isSubmittingToken}>Cancel</button>
-                <button type="submit" className="btn btn-primary btn-sm" disabled={isSubmittingToken}>
+                <button type="submit" className="btn btn-accent btn-sm" disabled={isSubmittingToken} style={{ minWidth: '120px', fontWeight: 600 }}>
                   {isSubmittingToken ? <><i className="fa-solid fa-spinner fa-spin" /> Issuing…</> : 'Confirm Token'}
                 </button>
               </div>
@@ -549,7 +671,7 @@ export default function StudentHomePage() {
 
             <div className="modal-actions" style={{ marginTop: '1rem' }}>
               <button className="btn btn-outline btn-sm" onClick={() => setViewingDoc(null)}>Close</button>
-              <button className="btn btn-primary btn-sm" onClick={() => window.print()}>
+              <button className="btn btn-accent btn-sm" onClick={() => window.print()} style={{ fontWeight: 600 }}>
                 <i className="fa-solid fa-print" style={{ marginRight: '0.35rem' }} /> Print / PDF
               </button>
             </div>
