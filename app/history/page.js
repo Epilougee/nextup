@@ -125,7 +125,13 @@ export default function HistoryPage() {
                     <span className="text-muted text-sm">{t.service_name}</span>
                   </div>
 
-                  <span className={`badge badge-${t.status}`}>{statusLabel}</span>
+                  <span style={{
+                    fontSize: '0.8rem',
+                    fontWeight: 600,
+                    color: t.status === 'completed' ? 'var(--green)' : t.status === 'serving' ? 'var(--accent)' : 'var(--muted)',
+                  }}>
+                    {statusLabel}
+                  </span>
                 </div>
 
                 <div

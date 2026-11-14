@@ -83,13 +83,11 @@ export default function MyTokenPage() {
     <StudentLayout user={currentUser}>
       <ReconnectingPill show={isReconnecting} />
 
-      {/* Header */}
-      <div className="card" style={{ padding: '1rem 1.25rem', marginBottom: '1rem' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <h1 style={{ fontSize: '1.2rem' }}>My Token</h1>
-          <span className="badge badge-blue" style={{ fontSize: '0.7rem' }}>
-            <span className="status-dot" /> LIVE
-          </span>
+      {/* Clean Flat Header */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+        <div>
+          <h1 style={{ fontSize: '1.35rem', fontWeight: 700, color: 'var(--primary-dk)' }}>My Active Token</h1>
+          <p className="text-muted text-sm">Live queue status — updates automatically.</p>
         </div>
       </div>
 
@@ -157,11 +155,13 @@ export default function MyTokenPage() {
             </div>
 
             {/* Status */}
-            <div style={{ marginBottom: '1.25rem' }}>
-              <span className={`badge ${token.status === 'serving' ? 'badge-serving' : 'badge-blue'}`}>
-                <span className="status-dot" />
-                {token.status === 'serving' ? 'Now Serving' : 'Waiting'}
-              </span>
+            <div style={{
+              marginBottom: '1rem',
+              fontWeight: 600,
+              fontSize: '0.85rem',
+              color: token.status === 'serving' ? 'var(--accent)' : 'var(--blue)',
+            }}>
+              {token.status === 'serving' ? '● Now Serving' : '● In Line'}
             </div>
 
             {/* Purpose */}

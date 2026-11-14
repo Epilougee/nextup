@@ -294,41 +294,45 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* ==========================================================================
-   Tab Switcher
+   Tab Switcher (Clean Underline Style — No clunky outer box)
    ========================================================================== */
 .tabs {
   display: flex;
-  gap: .3rem;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  padding: .3rem;
-  border-radius: var(--r);
-  margin-bottom: 1.25rem;
+  gap: 1.5rem;
+  border-bottom: 1px solid var(--border);
+  padding: 0;
+  margin-bottom: 1.5rem;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+  background: transparent;
 }
 .tab-btn {
-  flex: 1;
-  min-width: fit-content;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: .4rem;
-  padding: .55rem .9rem;
-  font-size: .875rem;
+  gap: .45rem;
+  padding: .75rem .25rem;
+  font-size: .9rem;
   font-weight: 500;
   font-family: inherit;
-  border-radius: var(--r-sm);
   border: none;
+  border-bottom: 2px solid transparent;
   background: transparent;
   color: var(--muted);
   cursor: pointer;
   transition: var(--ease);
   white-space: nowrap;
+  margin-bottom: -1px;
 }
-.tab-btn:hover { color: var(--primary-dk); background: var(--muted-bg); }
-.tab-btn.active { background: var(--primary); color: #fff; font-weight: 600; }
-.tab-btn.active svg { color: #fff !important; }
+.tab-btn:hover { color: var(--primary-dk); }
+.tab-btn.active {
+  background: transparent;
+  color: var(--primary-dk);
+  font-weight: 600;
+  border-bottom-color: var(--primary-dk);
+}
+.tab-btn.active svg { color: var(--primary-dk) !important; }
+
 
 /* ==========================================================================
    Admin Layout
