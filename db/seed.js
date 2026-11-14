@@ -1,6 +1,6 @@
 // ============================================================================
 // db/seed.js
-// Database Seed Script for QueueLess
+// Database Seed Script for NextUp
 // Populates Supabase with 1 admin, 15 Indian students, 5 services (1 closed),
 // today's multi-status tokens, and 7 days of historical tokens with an 11 AM peak.
 // Run via: node db/seed.js
@@ -442,7 +442,7 @@ async function runSeed() {
     }
   }
 
-  console.log('--- QueueLess Seed Complete! ---');
+  console.log('--- NextUp Seed Complete! ---');
   console.log('Demo Credentials:');
   console.log('  Admin:   admin@demo.com   / demo123');
   console.log('  Student: student1@demo.com / demo123 (has active token ACC-005 in line!)');

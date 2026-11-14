@@ -2,8 +2,7 @@
 
 // ============================================================================
 // components/StudentLayout.js
-// Mobile-first layout for college students with institutional banner,
-// sticky top bar, and bottom navigation.
+// Clean, mobile-friendly layout for students with simple topbar and bottom navigation.
 // ============================================================================
 
 import Link from 'next/link';
@@ -25,24 +24,12 @@ export default function StudentLayout({ children, user }) {
 
   return (
     <div className="student-shell">
-      {/* Institutional Top Strip */}
-      <div className="campus-header-band">
-        <div className="campus-tag">
-          <span style={{ fontWeight: 700 }}>NITM CAMPUS SERVICES</span>
-          <span style={{ opacity: 0.5 }}>|</span>
-          <span>STUDENT TOKEN DESK</span>
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', opacity: 0.85 }}>
-          <span>ADMIN BLOCK</span>
-        </div>
-      </div>
-
       {/* Top Header */}
       <header className="student-topbar">
-        <div className="brand-title">
+        <Link href="/" className="brand-title" style={{ textDecoration: 'none' }}>
           <span className="brand-badge">NU</span>
-          <span style={{ fontWeight: 800 }}>NextUp</span>
-        </div>
+          <span style={{ fontWeight: 700, fontSize: '1.1rem', color: 'var(--primary-dark)' }}>NextUp</span>
+        </Link>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
           {user && (
             <div
@@ -66,7 +53,7 @@ export default function StudentLayout({ children, user }) {
             onClick={handleLogout}
             className="btn btn-outline btn-sm"
             style={{ padding: '0.35rem 0.65rem', minHeight: '34px' }}
-            title="Sign out of student account"
+            title="Sign out"
           >
             <IconLogout />
           </button>

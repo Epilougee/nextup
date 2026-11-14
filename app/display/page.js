@@ -78,11 +78,11 @@ export default function PublicDisplayPage() {
             NU
           </div>
           <div>
-            <div style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--primary-dark)', letterSpacing: '-0.02em' }}>
-              NEXTUP CAMPUS DISPLAY
+            <div style={{ fontSize: '1.3rem', fontWeight: 700, color: 'var(--primary-dark)', letterSpacing: '-0.01em' }}>
+              NextUp Waiting Room Display
             </div>
-            <div className="text-muted" style={{ fontSize: '0.8125rem', fontWeight: 500 }}>
-              National Institute of Technology & Management • Central Waiting Lounge
+            <div className="text-muted" style={{ fontSize: '0.85rem' }}>
+              Live Token Status • All Desks
             </div>
           </div>
         </div>

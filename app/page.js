@@ -203,7 +203,7 @@ export default function StudentHomePage() {
     <StudentLayout user={currentUser}>
       <ReconnectingPill show={isReconnecting} />
 
-      {/* Header Banner */}
+      {/* Header */}
       <div
         style={{
           backgroundColor: 'var(--surface)',
@@ -214,14 +214,9 @@ export default function StudentHomePage() {
           boxShadow: 'var(--shadow-sm)',
         }}
       >
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.25rem' }}>
-          <h1 style={{ fontSize: '1.35rem' }}>Student Administration Hub</h1>
-          <span className="text-xs" style={{ color: 'var(--muted)', fontWeight: 700 }}>
-            CAMPUS CENTRAL PORTAL
-          </span>
-        </div>
+        <h1 style={{ fontSize: '1.3rem', marginBottom: '0.25rem', color: 'var(--primary-dark)' }}>Student Desk</h1>
         <p className="text-muted text-sm">
-          Apply directly for official verified digital documents online without visiting an office, or take a live token for in-person desk matters.
+          Get verified digital documents online instantly, or draw a token for counter desk visits.
         </p>
       </div>
 

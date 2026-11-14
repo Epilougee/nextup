@@ -2,8 +2,7 @@
 
 // ============================================================================
 // components/AdminLayout.js
-// Admin console layout: fixed sidebar + topbar, responsive mobile drawer.
-// Enhanced with institutional branding and tactile control styling.
+// Admin console layout: fixed sidebar + topbar, clean and functional.
 // ============================================================================
 
 import { useState } from 'react';
@@ -17,7 +16,6 @@ import {
   IconLogout,
   IconBars,
   IconClose,
-  IconBuildingColumns,
 } from './Icons';
 
 export default function AdminLayout({ children, user }) {
@@ -51,10 +49,10 @@ export default function AdminLayout({ children, user }) {
       {/* Fixed Left Sidebar */}
       <aside className={`admin-sidebar ${sidebarOpen ? 'open' : ''}`}>
         <div className="admin-sidebar-header">
-          <div className="brand-title">
+          <Link href="/admin/queue" className="brand-title" style={{ textDecoration: 'none' }}>
             <span className="brand-badge">NU</span>
-            <span>NextUp</span>
-          </div>
+            <span style={{ fontWeight: 700, color: 'var(--primary-dark)' }}>NextUp Staff</span>
+          </Link>
           <button
             className="hamburger-btn"
             style={{ display: sidebarOpen ? 'block' : 'none' }}
@@ -64,19 +62,7 @@ export default function AdminLayout({ children, user }) {
           </button>
         </div>
 
-        <div style={{ padding: '0.65rem 1.25rem', borderBottom: '1px solid var(--border)', backgroundColor: 'var(--surface-muted)' }}>
-          <div className="text-xs" style={{ color: 'var(--muted)', marginBottom: '0.15rem' }}>
-            Campus Desk
-          </div>
-          <div style={{ fontSize: '0.8125rem', fontWeight: 700, color: 'var(--primary-dark)' }}>
-            Staff Administration
-          </div>
-        </div>
-
-        <nav className="admin-nav">
-          <div className="text-xs" style={{ padding: '0.5rem 0.5rem 0.25rem', color: 'var(--muted)' }}>
-            Desk Operations
-          </div>
+        <nav className="admin-nav" style={{ padding: '1rem 0' }}>
           {navLinks.map((item) => (
             <Link
               key={item.href}
@@ -91,10 +77,6 @@ export default function AdminLayout({ children, user }) {
 
           <div style={{ margin: '1rem 0', borderTop: '1px solid var(--border)' }} />
 
-          <div className="text-xs" style={{ padding: '0 0.5rem 0.25rem', color: 'var(--muted)' }}>
-            Lounge Displays
-          </div>
-
           <Link
             href="/display"
             target="_blank"
@@ -108,7 +90,7 @@ export default function AdminLayout({ children, user }) {
 
         <div className="admin-sidebar-footer">
           <div style={{ marginBottom: '0.75rem' }}>
-            <div style={{ fontWeight: 700, color: 'var(--primary-dark)', fontSize: '0.875rem' }}>
+            <div style={{ fontWeight: 600, color: 'var(--primary-dark)', fontSize: '0.875rem' }}>
               {user?.name || 'Administrative Staff'}
             </div>
             <div className="text-muted" style={{ fontSize: '0.75rem' }}>
@@ -127,18 +109,6 @@ export default function AdminLayout({ children, user }) {
 
       {/* Main Administrative Content */}
       <div className="admin-main">
-        {/* Top Institutional Identity Strip */}
-        <div className="campus-header-band">
-          <div className="campus-tag">
-            <span style={{ fontWeight: 700 }}>NITM CAMPUS SERVICES</span>
-            <span style={{ opacity: 0.5 }}>|</span>
-            <span>CENTRAL REGISTRAR DESK</span>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', opacity: 0.85 }}>
-            <span>OPERATING HOURS: 10:00 - 16:00 IST</span>
-          </div>
-        </div>
-
         <header className="admin-topbar">
           <button
             className="hamburger-btn"
@@ -149,9 +119,9 @@ export default function AdminLayout({ children, user }) {
           </button>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            <span className="badge badge-open" style={{ fontSize: '0.7rem' }}>
+            <span className="badge badge-open" style={{ fontSize: '0.75rem' }}>
               <span className="status-dot"></span>
-              Console Online
+              Staff Console
             </span>
           </div>
 

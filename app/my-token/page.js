@@ -140,14 +140,14 @@ export default function MyTokenPage() {
         }}
       >
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.25rem' }}>
-          <h1 style={{ fontSize: '1.35rem' }}>Active Desk Token</h1>
+          <h1 style={{ fontSize: '1.3rem', color: 'var(--primary-dark)' }}>My Desk Token</h1>
           <span className="badge badge-waiting" style={{ fontSize: '0.7rem' }}>
             <span className="status-dot"></span>
             LIVE
           </span>
         </div>
         <p className="text-muted text-sm">
-          Keep this screen open. Your position automatically updates as students ahead are called.
+          Keep this screen open. Your queue position updates automatically.
         </p>
       </div>
 
