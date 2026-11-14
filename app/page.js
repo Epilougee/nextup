@@ -10,29 +10,34 @@ import { IconCheck, IconClose, IconSpinner, IconPrint } from '@/components/Icons
 
 const DEPT_THEMES = {
   ACC: {
-    color: '#059669',
-    bg: '#ECFDF5',
-    border: '#A7F3D0',
+    color: '#15803D',
+    bg: '#F0FDF4',
+    border: '#BBF7D0',
+    badgeBg: '#166534',
   },
   EXM: {
-    color: '#2563EB',
+    color: '#1D4ED8',
     bg: '#EFF6FF',
     border: '#BFDBFE',
+    badgeBg: '#1E40AF',
   },
   ADM: {
-    color: '#7C3AED',
-    bg: '#F5F3FF',
-    border: '#DDD6FE',
+    color: '#9F1239',
+    bg: '#FFF1F2',
+    border: '#FECDD3',
+    badgeBg: '#9F1239',
   },
   LIB: {
-    color: '#D97706',
+    color: '#B45309',
     bg: '#FFFBEB',
     border: '#FDE68A',
+    badgeBg: '#92400E',
   },
   DEN: {
-    color: '#0891B2',
-    bg: '#ECFEFF',
-    border: '#A5F3FC',
+    color: '#0F766E',
+    bg: '#F0FDFA',
+    border: '#99F6E4',
+    badgeBg: '#115E59',
   },
 };
 
@@ -217,14 +222,17 @@ export default function StudentHomePage() {
                 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
                     <span style={{
-                      fontWeight: 800,
-                      fontSize: '0.8rem',
-                      color: theme.color,
-                      background: theme.bg,
-                      border: `1px solid ${theme.border}`,
-                      padding: '0.22rem 0.55rem',
-                      borderRadius: '5px',
-                      letterSpacing: '0.04em',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      fontWeight: 700,
+                      fontSize: '0.72rem',
+                      letterSpacing: '0.07em',
+                      color: '#FFFFFF',
+                      backgroundColor: theme.badgeBg || theme.color,
+                      padding: '0.2rem 0.52rem',
+                      borderRadius: '3px',
+                      boxShadow: '0 1px 2px rgba(0,0,0,0.06)',
+                      fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
                     }}>
                       {dept.prefix}
                     </span>
@@ -300,14 +308,17 @@ export default function StudentHomePage() {
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.9rem' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
                     <span style={{
-                      fontWeight: 800,
-                      fontSize: '0.8rem',
-                      color: theme.color,
-                      background: theme.bg,
-                      border: `1px solid ${theme.border}`,
-                      padding: '0.22rem 0.55rem',
-                      borderRadius: '5px',
-                      letterSpacing: '0.04em',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      fontWeight: 700,
+                      fontSize: '0.72rem',
+                      letterSpacing: '0.07em',
+                      color: '#FFFFFF',
+                      backgroundColor: theme.badgeBg || theme.color,
+                      padding: '0.2rem 0.52rem',
+                      borderRadius: '3px',
+                      boxShadow: '0 1px 2px rgba(0,0,0,0.06)',
+                      fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
                     }}>
                       {svc.prefix}
                     </span>

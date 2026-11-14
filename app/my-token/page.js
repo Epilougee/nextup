@@ -12,11 +12,11 @@ import {
 } from '@/components/Icons';
 
 const DEPT_THEMES = {
-  ACC: { color: '#059669', bg: '#ECFDF5', border: '#A7F3D0' },
-  EXM: { color: '#2563EB', bg: '#EFF6FF', border: '#BFDBFE' },
-  ADM: { color: '#7C3AED', bg: '#F5F3FF', border: '#DDD6FE' },
-  LIB: { color: '#D97706', bg: '#FFFBEB', border: '#FDE68A' },
-  DEN: { color: '#0891B2', bg: '#ECFEFF', border: '#A5F3FC' },
+  ACC: { color: '#15803D', bg: '#F0FDF4', border: '#BBF7D0', badgeBg: '#166534' },
+  EXM: { color: '#1D4ED8', bg: '#EFF6FF', border: '#BFDBFE', badgeBg: '#1E40AF' },
+  ADM: { color: '#9F1239', bg: '#FFF1F2', border: '#FECDD3', badgeBg: '#9F1239' },
+  LIB: { color: '#B45309', bg: '#FFFBEB', border: '#FDE68A', badgeBg: '#92400E' },
+  DEN: { color: '#0F766E', bg: '#F0FDFA', border: '#99F6E4', badgeBg: '#115E59' },
 };
 
 export default function MyTokenPage() {
@@ -150,14 +150,16 @@ export default function MyTokenPage() {
               return (
                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
                   <span style={{
-                    background: theme.bg,
-                    color: theme.color,
-                    border: `1px solid ${theme.border}`,
-                    fontWeight: 800,
-                    fontSize: '0.75rem',
-                    padding: '0.15rem 0.45rem',
-                    borderRadius: '4px',
-                    letterSpacing: '0.04em',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    backgroundColor: theme.badgeBg || theme.color,
+                    color: '#FFFFFF',
+                    fontWeight: 700,
+                    fontSize: '0.72rem',
+                    padding: '0.18rem 0.48rem',
+                    borderRadius: '3px',
+                    letterSpacing: '0.06em',
+                    fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
                   }}>{token.service?.prefix}</span>
                   <span style={{ fontWeight: 600, fontSize: '0.92rem' }}>{token.service?.name}</span>
                 </div>

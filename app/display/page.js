@@ -13,11 +13,11 @@ import ReconnectingPill from '@/components/ReconnectingPill';
 import { usePolling } from '@/components/usePolling';
 
 const DEPT_THEMES = {
-  ACC: { color: '#059669', bg: '#ECFDF5', border: '#A7F3D0' },
-  EXM: { color: '#2563EB', bg: '#EFF6FF', border: '#BFDBFE' },
-  ADM: { color: '#7C3AED', bg: '#F5F3FF', border: '#DDD6FE' },
-  LIB: { color: '#D97706', bg: '#FFFBEB', border: '#FDE68A' },
-  DEN: { color: '#0891B2', bg: '#ECFEFF', border: '#A5F3FC' },
+  ACC: { color: '#15803D', bg: '#F0FDF4', border: '#BBF7D0', badgeBg: '#166534' },
+  EXM: { color: '#1D4ED8', bg: '#EFF6FF', border: '#BFDBFE', badgeBg: '#1E40AF' },
+  ADM: { color: '#9F1239', bg: '#FFF1F2', border: '#FECDD3', badgeBg: '#9F1239' },
+  LIB: { color: '#B45309', bg: '#FFFBEB', border: '#FDE68A', badgeBg: '#92400E' },
+  DEN: { color: '#0F766E', bg: '#F0FDFA', border: '#99F6E4', badgeBg: '#115E59' },
 };
 
 export const dynamic = 'force-dynamic';
@@ -150,14 +150,17 @@ export default function PublicDisplayPage() {
                   </div>
                   <span
                     style={{
-                      backgroundColor: theme.bg,
-                      color: theme.color,
-                      border: `1px solid ${theme.border}`,
-                      padding: '0.25rem 0.65rem',
-                      borderRadius: '5px',
-                      fontWeight: 800,
-                      fontSize: '0.9rem',
-                      letterSpacing: '0.04em',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      backgroundColor: theme.badgeBg || theme.color,
+                      color: '#FFFFFF',
+                      padding: '0.22rem 0.55rem',
+                      borderRadius: '3px',
+                      fontWeight: 700,
+                      fontSize: '0.8rem',
+                      letterSpacing: '0.07em',
+                      fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
+                      boxShadow: '0 1px 2px rgba(0,0,0,0.06)',
                     }}
                     className="tabular-nums"
                   >
