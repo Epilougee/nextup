@@ -1,50 +1,61 @@
 /* ==========================================================================
-   QueueLess - Global Stylesheet
+   NextUp - Global Stylesheet
    Modern Campus Portal & Digital Document Service
-   Clean, soothing slate aesthetic with zero eye-strain.
+   Vibrant, clean, high-contrast, modern SaaS aesthetic.
    ========================================================================== */
 
 :root {
-  --primary: #1E293B;          /* Slate 800 */
-  --primary-dark: #0F172A;     /* Slate 900 */
-  --primary-light: #334155;    /* Slate 700 */
-  --indigo: #4F46E5;           /* Indigo 600 - Queue & Physical */
+  /* Brand Core */
+  --primary: #2563EB;          /* Vibrant Blue 600 */
+  --primary-hover: #1D4ED8;    /* Blue 700 */
+  --primary-dark: #0F172A;     /* Midnight Slate 900 */
+  --primary-subtle: #EFF6FF;   /* Blue 50 */
+  
+  /* Purpose Accents */
+  --indigo: #4F46E5;           /* Indigo 600 - Physical Desk */
   --indigo-light: #EEF2FF;
   --indigo-border: #C7D2FE;
-  --emerald: #059669;          /* Emerald 600 - Digital Verified */
+  
+  --emerald: #059669;          /* Emerald 600 - Verified Digital */
   --emerald-light: #ECFDF5;
   --emerald-border: #A7F3D0;
-  --accent: #D97706;           /* Amber 600 - Now Serving highlight */
-  --accent-light: #FFFBEB;
-  --accent-border: #FDE68A;
   
-  --bg: #F8FAFC;               /* Clean Slate 50 - soothing & modern */
+  --accent: #EA580C;           /* Amber/Orange 600 - Now Serving */
+  --accent-light: #FFF7ED;
+  --accent-border: #FFEDD5;
+  
+  /* Background & Surfaces */
+  --bg: #F8FAFC;               /* Clean, soothing slate-50 */
   --surface: #FFFFFF;          /* Pure White */
-  --surface-muted: #F1F5F9;    /* Slate 100 */
-  --surface-subtle: #F8FAFC;
-  --text: #1E293B;             /* Slate 800 */
-  --text-secondary: #475569;   /* Slate 600 */
+  --surface-muted: #F1F5F9;    /* Slate-100 */
+  --surface-subtle: #F8FAFC;   /* Slate-50 */
+  
+  /* Typography */
+  --text: #0F172A;             /* Slate 900 */
+  --text-secondary: #334155;   /* Slate 700 */
   --muted: #64748B;            /* Slate 500 */
   --border: #E2E8F0;           /* Slate 200 */
   --border-strong: #CBD5E1;    /* Slate 300 */
   
+  /* Status Colors */
   --waiting: #0284C7;          /* Sky 600 */
   --completed: #059669;        /* Emerald 600 */
-  --noshow: #E11D48;           /* Rose 600 */
+  --noshow: #DC2626;           /* Red 600 */
   --cancelled: #64748B;        /* Slate 500 */
 
+  /* Radii & Shadows */
   --radius: 12px;
   --radius-sm: 8px;
   --radius-xs: 4px;
   --radius-pill: 9999px;
   
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.08), 0 1px 2px -1px rgba(0, 0, 0, 0.06);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+  --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.08), 0 1px 2px -1px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
   
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  --transition: all 150ms ease-in-out;
+  --transition: all 160ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 * {
@@ -69,7 +80,7 @@ html, body {
 }
 
 /* ==========================================================================
-   Typography & Hierarchy
+   Typography
    ========================================================================== */
 h1, h2, h3, h4, h5 {
   color: var(--primary-dark);
@@ -108,7 +119,7 @@ a {
 }
 
 /* ==========================================================================
-   Buttons (Tactile, min 44px height for touch targets)
+   Buttons (Modern, Crisp & Tactile)
    ========================================================================== */
 .btn {
   display: inline-flex;
@@ -130,24 +141,24 @@ a {
 }
 
 .btn:active:not(:disabled) {
-  transform: translateY(1px);
+  transform: scale(0.99);
 }
 
 .btn:disabled {
-  opacity: 0.5;
+  opacity: 0.45;
   cursor: not-allowed;
   pointer-events: none;
   box-shadow: none;
 }
 
 .btn-primary {
-  background-color: var(--primary-dark);
+  background-color: var(--primary);
   color: #FFFFFF;
-  border-color: var(--primary);
+  border-color: var(--primary-hover);
 }
 
 .btn-primary:hover:not(:disabled) {
-  background-color: #1E293B;
+  background-color: var(--primary-hover);
 }
 
 .btn-emerald {
@@ -173,11 +184,11 @@ a {
 .btn-accent {
   background-color: var(--accent);
   color: #FFFFFF;
-  border-color: #B45309;
+  border-color: #C2410C;
 }
 
 .btn-accent:hover:not(:disabled) {
-  background-color: #B45309;
+  background-color: #C2410C;
 }
 
 .btn-outline {
@@ -198,18 +209,18 @@ a {
 }
 
 .btn-danger-outline:hover:not(:disabled) {
-  background-color: #FFF1F2;
-  border-color: #FDA4AF;
+  background-color: #FEF2F2;
+  border-color: #F87171;
 }
 
 .btn-danger {
   background-color: var(--noshow);
   color: #FFFFFF;
-  border-color: #BE123C;
+  border-color: #B91C1C;
 }
 
 .btn-danger:hover:not(:disabled) {
-  background-color: #BE123C;
+  background-color: #B91C1C;
 }
 
 .btn-sm {
@@ -223,17 +234,15 @@ a {
 }
 
 /* ==========================================================================
-   Navigation Tabs (Counter Desks vs Digital Documents vs My Documents)
+   Portal Navigation Tabs (Clean Pill Switcher)
    ========================================================================== */
 .portal-tabs {
   display: flex;
-  background-color: var(--surface);
-  border: 1px solid var(--border);
+  background-color: #F1F5F9;
   padding: 0.35rem;
   border-radius: var(--radius);
   gap: 0.35rem;
   margin-bottom: 1.25rem;
-  box-shadow: var(--shadow-sm);
   overflow-x: auto;
 }
 
@@ -258,17 +267,17 @@ a {
 
 .portal-tab-btn:hover {
   color: var(--text);
-  background-color: var(--surface-muted);
+  background-color: rgba(255, 255, 255, 0.6);
 }
 
 .portal-tab-btn.active {
-  background-color: var(--primary-dark);
-  color: #FFFFFF;
-  box-shadow: var(--shadow-sm);
+  background-color: #FFFFFF;
+  color: var(--primary-dark);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 /* ==========================================================================
-   Institutional Cards (Crisp White on Soft Slate)
+   Cards & Layout Boxes
    ========================================================================== */
 .card {
   background-color: var(--surface);
@@ -294,7 +303,6 @@ a {
   border-bottom: 1px solid var(--border);
 }
 
-/* Inset boxes for structured details inside cards */
 .inset-box {
   background-color: var(--surface-subtle);
   border: 1px solid var(--border);
@@ -302,7 +310,7 @@ a {
   padding: 0.75rem 1rem;
 }
 
-/* Tabular Token Codes */
+/* Tabular Token Numbers */
 .token-number {
   font-size: 2.25rem;
   font-weight: 800;
@@ -344,7 +352,7 @@ a {
 
 .badge-digital {
   background-color: var(--emerald-light);
-  color: var(--emerald);
+  color: #047857;
   border: 1px solid var(--emerald-border);
 }
 .badge-digital .status-dot {
@@ -353,7 +361,7 @@ a {
 
 .badge-physical {
   background-color: var(--indigo-light);
-  color: var(--indigo);
+  color: #4338CA;
   border: 1px solid var(--indigo-border);
 }
 .badge-physical .status-dot {
@@ -362,7 +370,7 @@ a {
 
 .badge-waiting {
   background-color: #F0F9FF;
-  color: var(--waiting);
+  color: #0369A1;
   border: 1px solid #BAE6FD;
 }
 .badge-waiting .status-dot {
@@ -371,7 +379,7 @@ a {
 
 .badge-serving {
   background-color: var(--accent-light);
-  color: var(--accent);
+  color: #C2410C;
   border: 1px solid var(--accent-border);
 }
 .badge-serving .status-dot {
@@ -380,7 +388,7 @@ a {
 
 .badge-completed {
   background-color: var(--emerald-light);
-  color: var(--completed);
+  color: #047857;
   border: 1px solid var(--emerald-border);
 }
 .badge-completed .status-dot {
@@ -388,7 +396,7 @@ a {
 }
 
 .badge-noshow {
-  background-color: #FFF1F2;
+  background-color: #FEF2F2;
   color: var(--noshow);
   border: 1px solid #FECDD3;
 }
@@ -407,7 +415,7 @@ a {
 
 .badge-open {
   background-color: var(--emerald-light);
-  color: var(--completed);
+  color: #047857;
   border: 1px solid var(--emerald-border);
 }
 .badge-open .status-dot {
@@ -424,7 +432,7 @@ a {
 }
 
 /* ==========================================================================
-   Campus Header Band (Institutional Identity Strip)
+   Campus Header Band (Institutional Top Strip)
    ========================================================================== */
 .campus-header-band {
   background-color: #0F172A;
@@ -452,7 +460,7 @@ a {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  padding-bottom: 74px; /* space for bottom navigation */
+  padding-bottom: 74px;
 }
 
 .student-topbar {
@@ -469,7 +477,7 @@ a {
 }
 
 .brand-badge {
-  background-color: var(--primary-dark);
+  background-color: var(--primary);
   color: #FFFFFF;
   font-weight: 800;
   font-size: 0.85rem;
@@ -527,8 +535,8 @@ a {
 }
 
 .bottom-nav-item.active {
-  color: var(--primary-dark);
-  background-color: var(--surface-muted);
+  color: var(--primary);
+  background-color: var(--primary-subtle);
 }
 
 .bottom-nav-item svg {
@@ -592,7 +600,7 @@ a {
 }
 
 .admin-nav-item.active {
-  background-color: var(--primary-dark);
+  background-color: var(--primary);
   color: #FFFFFF;
 }
 
@@ -672,7 +680,7 @@ a {
    ========================================================================== */
 .display-shell {
   min-height: 100vh;
-  background-color: #0F172A; /* High Contrast Dark Room Signage */
+  background-color: #0F172A;
   color: #FFFFFF;
   padding: 1.5rem;
   display: flex;
@@ -719,7 +727,7 @@ a {
 
 .display-tile-serving {
   border-top: 4px solid var(--accent);
-  box-shadow: 0 0 20px rgba(217, 119, 6, 0.15);
+  box-shadow: 0 0 20px rgba(234, 88, 12, 0.2);
 }
 
 /* ==========================================================================
@@ -825,8 +833,8 @@ a {
 
 .form-input:focus, .form-select:focus, .form-textarea:focus {
   outline: none;
-  border-color: var(--indigo);
-  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
 
 /* ==========================================================================
@@ -883,7 +891,7 @@ tr:hover td {
 
 .progress-bar-fill {
   height: 100%;
-  background-color: var(--indigo);
+  background-color: var(--primary);
   border-radius: var(--radius-pill);
   transition: width 200ms ease;
 }
