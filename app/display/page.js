@@ -12,6 +12,14 @@ import { useState, useEffect } from 'react';
 import ReconnectingPill from '@/components/ReconnectingPill';
 import { usePolling } from '@/components/usePolling';
 
+const DEPT_THEMES = {
+  ACC: { color: '#059669', bg: '#ECFDF5', border: '#A7F3D0' },
+  EXM: { color: '#2563EB', bg: '#EFF6FF', border: '#BFDBFE' },
+  ADM: { color: '#7C3AED', bg: '#F5F3FF', border: '#DDD6FE' },
+  LIB: { color: '#D97706', bg: '#FFFBEB', border: '#FDE68A' },
+  DEN: { color: '#0891B2', bg: '#ECFEFF', border: '#A5F3FC' },
+};
+
 export const dynamic = 'force-dynamic';
 
 export default function PublicDisplayPage() {
@@ -112,43 +120,47 @@ export default function PublicDisplayPage() {
 
       {tiles.length > 0 && (
         <div className="display-grid">
-          {tiles.map((tile) => (
-            <div
-              key={tile.id}
-              className={`display-tile ${tile.isServing ? 'display-tile-serving' : ''} fade-in`}
-            >
-              {/* Office Title */}
+          {tiles.map((tile) => {
+            const theme = DEPT_THEMES[tile.prefix] || { color: '#4B5563', bg: '#F3F4F6', border: '#E5E7EB' };
+            return (
               <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  borderBottom: '1px solid var(--border)',
-                  paddingBottom: '0.85rem',
-                }}
+                key={tile.id}
+                className={`display-tile ${tile.isServing ? 'display-tile-serving' : ''} fade-in`}
               >
-                <div>
-                  <div style={{ fontSize: '1.3rem', fontWeight: 800, color: 'var(--primary-dark)' }}>
-                    {tile.name}
-                  </div>
-                  <div className="text-muted text-sm" style={{ fontSize: '0.78rem' }}>
-                    Counter Desk
-                  </div>
-                </div>
-                <span
+                {/* Office Title */}
+                <div
                   style={{
-                    backgroundColor: '#F3F4F6',
-                    padding: '0.25rem 0.65rem',
-                    borderRadius: 'var(--radius-xs)',
-                    fontWeight: 800,
-                    fontSize: '0.9rem',
-                    border: '1px solid var(--border)',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    borderBottom: '1px solid var(--border)',
+                    paddingBottom: '0.85rem',
                   }}
-                  className="tabular-nums"
                 >
-                  {tile.prefix}
-                </span>
-              </div>
+                  <div>
+                    <div style={{ fontSize: '1.3rem', fontWeight: 800, color: 'var(--primary-dark)' }}>
+                      {tile.name}
+                    </div>
+                    <div className="text-muted text-sm" style={{ fontSize: '0.78rem' }}>
+                      Counter Desk
+                    </div>
+                  </div>
+                  <span
+                    style={{
+                      backgroundColor: theme.bg,
+                      color: theme.color,
+                      border: `1px solid ${theme.border}`,
+                      padding: '0.25rem 0.65rem',
+                      borderRadius: '5px',
+                      fontWeight: 800,
+                      fontSize: '0.9rem',
+                      letterSpacing: '0.04em',
+                    }}
+                    className="tabular-nums"
+                  >
+                    {tile.prefix}
+                  </span>
+                </div>
 
               {/* Now Serving Inset Display */}
               <div
@@ -226,8 +238,9 @@ export default function PublicDisplayPage() {
                 </div>
               </div>
             </div>
-          ))}
-        </div>
+          );
+        })}
+      </div>
       )}
     </div>
   );

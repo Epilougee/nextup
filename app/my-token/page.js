@@ -11,6 +11,14 @@ import {
   IconSpinner,
 } from '@/components/Icons';
 
+const DEPT_THEMES = {
+  ACC: { color: '#059669', bg: '#ECFDF5', border: '#A7F3D0' },
+  EXM: { color: '#2563EB', bg: '#EFF6FF', border: '#BFDBFE' },
+  ADM: { color: '#7C3AED', bg: '#F5F3FF', border: '#DDD6FE' },
+  LIB: { color: '#D97706', bg: '#FFFBEB', border: '#FDE68A' },
+  DEN: { color: '#0891B2', bg: '#ECFEFF', border: '#A5F3FC' },
+};
+
 export default function MyTokenPage() {
   const router = useRouter();
   const [currentUser, setCurrentUser] = useState(null);
@@ -137,14 +145,24 @@ export default function MyTokenPage() {
             borderTop: `4px solid ${token.status === 'serving' ? 'var(--accent)' : 'var(--primary)'}`,
           }}>
             {/* Office */}
-            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
-              <span style={{
-                background: 'var(--muted-bg)', border: '1px solid var(--border)',
-                fontWeight: 800, fontSize: '0.75rem', padding: '0.15rem 0.4rem',
-                borderRadius: 'var(--r-sm)',
-              }}>{token.service?.prefix}</span>
-              <span style={{ fontWeight: 600, fontSize: '0.9rem' }}>{token.service?.name}</span>
-            </div>
+            {(() => {
+              const theme = DEPT_THEMES[token.service?.prefix] || { color: '#4B5563', bg: '#F3F4F6', border: '#E5E7EB' };
+              return (
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
+                  <span style={{
+                    background: theme.bg,
+                    color: theme.color,
+                    border: `1px solid ${theme.border}`,
+                    fontWeight: 800,
+                    fontSize: '0.75rem',
+                    padding: '0.15rem 0.45rem',
+                    borderRadius: '4px',
+                    letterSpacing: '0.04em',
+                  }}>{token.service?.prefix}</span>
+                  <span style={{ fontWeight: 600, fontSize: '0.92rem' }}>{token.service?.name}</span>
+                </div>
+              );
+            })()}
 
             {/* Token code */}
             <div
