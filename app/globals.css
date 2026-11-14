@@ -595,12 +595,91 @@ tr:hover td { background: var(--muted-bg); }
 .stat-num { font-size: 1.75rem; font-weight: 800; font-variant-numeric: tabular-nums; }
 .stat-label { font-size: .78rem; color: var(--muted); margin-top: .15rem; }
 
-/* Certificate paper (printable) */
+/* ==========================================================================
+   Print Stylesheet — Clean Official Document Printing
+   ========================================================================== */
 @media print {
-  body * { visibility: hidden; }
-  #cert, #cert * { visibility: visible; }
-  #cert { position: absolute; left: 0; top: 0; width: 100%; }
+  html, body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    height: auto !important;
+    min-height: 100% !important;
+    overflow: visible !important;
+  }
+
+  /* Hide app shell, navigation bars, buttons, and backdrop shadows */
+  body * {
+    visibility: hidden;
+  }
+
+  /* Make certificate paper and all its children visible */
+  #printable-certificate,
+  #printable-certificate *,
+  #cert,
+  #cert *,
+  .cert-paper,
+  .cert-paper * {
+    visibility: visible !important;
+  }
+
+  /* Unroll modal constraints during printing */
+  .modal-backdrop {
+    position: static !important;
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: block !important;
+    inset: auto !important;
+  }
+
+  .modal-card,
+  .modal-card-lg {
+    position: static !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    max-height: none !important;
+    max-width: 100% !important;
+    overflow: visible !important;
+    background: transparent !important;
+  }
+
+  /* Position certificate cleanly on the paper */
+  #printable-certificate,
+  #cert,
+  .cert-paper {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 2.5cm 2cm !important;
+    box-sizing: border-box !important;
+    border: 2px solid #334155 !important;
+    border-radius: 4px !important;
+    background: #ffffff !important;
+    color: #0f172a !important;
+    box-shadow: none !important;
+    z-index: 9999999 !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* Suppress non-printable UI buttons and toasts */
+  .modal-actions,
+  .modal-header > div > button,
+  .reconnecting-pill,
+  .student-topbar,
+  .bottom-nav,
+  button {
+    display: none !important;
+    visibility: hidden !important;
+  }
 }
+
 .cert-paper {
   border: 1px solid var(--border);
   border-radius: var(--r);

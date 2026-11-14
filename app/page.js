@@ -487,59 +487,62 @@ export default function StudentHomePage() {
 
             <div className="cert-paper" id="printable-certificate">
               <div className="certificate-header">
-                <div style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.07em', color: '#475569', textTransform: 'uppercase' }}>
-                  College Administration
+                <div style={{ fontSize: '0.78rem', fontWeight: 800, letterSpacing: '0.08em', color: '#475569', textTransform: 'uppercase' }}>
+                  Institutional Registrar Office • Academic Affairs
                 </div>
-                <div style={{ fontSize: '1.2rem', fontWeight: 800, color: '#0F172A', margin: '0.3rem 0' }}>
+                <div style={{ fontSize: '1.35rem', fontWeight: 800, color: '#0F172A', margin: '0.4rem 0' }}>
                   {viewingDoc.doc_title}
                 </div>
-                <div style={{ fontSize: '0.8rem', color: '#64748B' }}>Office of Academic Records</div>
+                <div style={{ fontSize: '0.85rem', color: '#64748B' }}>
+                  Central Campus Administration
+                </div>
               </div>
 
               <div style={{
                 display: 'flex', justifyContent: 'space-between',
                 borderBottom: '1px solid #CBD5E1', paddingBottom: '0.65rem',
-                marginBottom: '0.9rem', fontSize: '0.8rem',
+                marginBottom: '1rem', fontSize: '0.85rem',
               }}>
-                <span><strong>Ref:</strong> {viewingDoc.reference_no}</span>
-                <span><strong>Issued:</strong> {new Date(viewingDoc.issued_at).toLocaleDateString()}</span>
+                <span><strong>Document Ref:</strong> <span className="tabular-nums">{viewingDoc.reference_no}</span></span>
+                <span><strong>Issued Date:</strong> {new Date(viewingDoc.issued_at).toLocaleDateString()}</span>
               </div>
 
               <div style={{
-                display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem',
-                background: '#F8FAFC', border: '1px solid #E2E8F0',
-                borderRadius: '6px', padding: '0.9rem', marginBottom: '1rem',
-                fontSize: '0.85rem',
+                display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.65rem',
+                background: '#F8FAFC', border: '1px solid #CBD5E1',
+                borderRadius: '6px', padding: '1rem', marginBottom: '1.25rem',
+                fontSize: '0.875rem',
               }}>
-                <div><span className="text-muted">Name: </span><strong>{viewingDoc.metadata?.student_name || currentUser?.name}</strong></div>
-                <div><span className="text-muted">Roll No: </span><strong>{viewingDoc.metadata?.roll_no || '—'}</strong></div>
-                <div><span className="text-muted">Branch: </span><strong>{viewingDoc.metadata?.branch || 'Computer Science & Engineering'}</strong></div>
-                <div><span className="text-muted">Term: </span><strong>{viewingDoc.metadata?.semester || 'Semester V'}</strong></div>
+                <div><span className="text-muted">Student Name: </span><strong>{viewingDoc.metadata?.student_name || currentUser?.name}</strong></div>
+                <div><span className="text-muted">Roll / Reg No: </span><strong>{viewingDoc.metadata?.roll_no || '—'}</strong></div>
+                <div><span className="text-muted">Department: </span><strong>{viewingDoc.metadata?.branch || 'Computer Science & Engineering'}</strong></div>
+                <div><span className="text-muted">Academic Term: </span><strong>{viewingDoc.metadata?.semester || 'Semester V'}</strong></div>
               </div>
 
-              <div style={{ fontSize: '0.85rem', lineHeight: 1.6, color: '#334155', marginBottom: '1.25rem' }}>
-                <p style={{ marginBottom: '0.5rem' }}>
-                  This document certifies that the above-named student is enrolled in full-time regular standing at this institution.
+              <div style={{ fontSize: '0.9rem', lineHeight: 1.65, color: '#334155', marginBottom: '1.5rem' }}>
+                <p style={{ marginBottom: '0.65rem' }}>
+                  This document officially certifies that the above-named student is registered in regular full-time standing at this institution. All required department approvals, academic records, and institutional clearances have been reviewed and validated against official university records.
                 </p>
-                <p><strong>Purpose:</strong> {viewingDoc.purpose}</p>
+                <p><strong>Declared Purpose:</strong> {viewingDoc.purpose}</p>
               </div>
 
               <div style={{
-                borderTop: '2px dashed #CBD5E1', paddingTop: '0.9rem',
-                display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.75rem',
+                borderTop: '2px dashed #94A3B8', paddingTop: '1rem',
+                display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem',
               }}>
                 <div className="certificate-seal">
                   <i className="fa-solid fa-shield-halved" />
                   <div>
-                    <div>DIGITALLY VERIFIED</div>
-                    <div style={{ fontSize: '0.68rem', fontWeight: 500, color: '#047857' }}>
-                      Code: {viewingDoc.metadata?.verification_code || 'VRF-98214AC'}
+                    <div>DIGITALLY VERIFIED CREDENTIAL</div>
+                    <div style={{ fontSize: '0.7rem', fontWeight: 600, color: '#047857' }}>
+                      Security Hash: {viewingDoc.metadata?.verification_code || 'VRF-98214AC'}
                     </div>
                   </div>
                 </div>
-                <div style={{ textAlign: 'right', fontSize: '0.75rem', color: '#64748B' }}>
-                  <div style={{ fontWeight: 700, color: '#0F172A' }}>Registrar / Authorised Signatory</div>
-                  <div style={{ fontStyle: 'italic', marginTop: '0.15rem' }}>Digital credential — physical visit not required</div>
+                <div style={{ textAlign: 'right', fontSize: '0.78rem', color: '#475569' }}>
+                  <div style={{ fontWeight: 700, color: '#0F172A' }}>Registrar / Authorized Signatory</div>
+                  <div>Central Academic Administration</div>
+                  <div style={{ fontStyle: 'italic', marginTop: '0.15rem' }}>Official Digital Issuance • Valid Without Physical Signature</div>
                 </div>
               </div>
             </div>
