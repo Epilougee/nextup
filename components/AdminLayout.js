@@ -110,30 +110,21 @@ export default function AdminLayout({ children, user }) {
       {/* Main Administrative Content */}
       <div className="admin-main">
         <header className="admin-topbar">
-          <button
-            className="hamburger-btn"
-            onClick={() => setSidebarOpen(true)}
-            aria-label="Open menu"
-          >
-            <IconBars />
-          </button>
-
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            <span className="badge badge-open" style={{ fontSize: '0.75rem' }}>
-              <span className="status-dot"></span>
+            <button
+              className="hamburger-btn"
+              onClick={() => setSidebarOpen(true)}
+              aria-label="Open menu"
+            >
+              <IconBars />
+            </button>
+            <span style={{ fontWeight: 600, color: 'var(--text)', fontSize: '0.92rem' }}>
               Staff Console
             </span>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <Link
-              href="/display"
-              target="_blank"
-              className="btn btn-outline btn-sm"
-            >
-              <IconDisplay />
-              <span>Public TV Board</span>
-            </Link>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+            <span className="text-muted text-sm">{user?.name || 'Staff'}</span>
           </div>
         </header>
 

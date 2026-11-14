@@ -352,11 +352,13 @@ a { color: inherit; text-decoration: none; }
 }
 
 .admin-sidebar-header {
-  padding: 1rem 1.25rem;
+  height: 56px;
+  padding: 0 1.25rem;
   border-bottom: 1px solid var(--border);
   display: flex;
   align-items: center;
   justify-content: space-between;
+  box-sizing: border-box;
 }
 
 .admin-sidebar-footer {

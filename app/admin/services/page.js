@@ -176,20 +176,20 @@ export default function AdminServicesPage() {
         style={{
           display: 'flex',
           justifyContent: 'space-between',
-          alignItems: 'center',
+          alignItems: 'flex-start',
           flexWrap: 'wrap',
           gap: '1rem',
           marginBottom: '1.5rem',
         }}
       >
         <div>
-          <h1 style={{ fontSize: '1.4rem', marginBottom: '0.2rem' }}>Administration Offices</h1>
+          <h1 style={{ fontSize: '1.35rem', marginBottom: '0.2rem' }}>Administration Offices</h1>
           <p className="text-muted text-sm">
             Configure office counters, working hours, service targets, and queue limits.
           </p>
         </div>
 
-        <button onClick={handleOpenAdd} className="btn btn-primary">
+        <button onClick={handleOpenAdd} className="btn btn-primary" style={{ marginTop: '0.15rem' }}>
           <IconPlus />
           <span>Add New Office</span>
         </button>

@@ -138,21 +138,21 @@ export default function AdminAnalyticsPage() {
         style={{
           display: 'flex',
           justifyContent: 'space-between',
-          alignItems: 'center',
+          alignItems: 'flex-start',
           flexWrap: 'wrap',
           gap: '1rem',
           marginBottom: '1.5rem',
         }}
       >
         <div>
-          <h1 style={{ fontSize: '1.4rem', marginBottom: '0.2rem' }}>Queue Analytics</h1>
+          <h1 style={{ fontSize: '1.35rem', marginBottom: '0.2rem' }}>Queue Analytics</h1>
           <p className="text-muted text-sm">
             Office workload, service efficiency, and peak hour trends across college offices.
           </p>
         </div>
 
         {/* Filter Toggle: Today / Last 7 Days */}
-        <div style={{ display: 'inline-flex', backgroundColor: '#EFECE6', padding: '3px', borderRadius: 'var(--radius-sm)' }}>
+        <div style={{ display: 'inline-flex', backgroundColor: '#EFECE6', padding: '3px', borderRadius: 'var(--radius-sm)', marginTop: '0.15rem' }}>
           <button
             type="button"
             className={`btn btn-sm ${range === 'today' ? 'btn-primary' : 'btn-outline'}`}

@@ -199,7 +199,7 @@ function AdminQueueContent() {
       <div
         style={{
           display: 'flex',
-          alignItems: 'center',
+          alignItems: 'flex-start',
           justifyContent: 'space-between',
           flexWrap: 'wrap',
           gap: '1rem',
@@ -207,14 +207,14 @@ function AdminQueueContent() {
         }}
       >
         <div>
-          <h1 style={{ fontSize: '1.4rem', marginBottom: '0.2rem' }}>Queue Console</h1>
+          <h1 style={{ fontSize: '1.35rem', marginBottom: '0.2rem' }}>Queue Console</h1>
           <p className="text-muted text-sm">
             Live queue operator desk. Call, serve, or skip tokens for today.
           </p>
         </div>
 
         {/* Office Switcher */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', paddingTop: '0.15rem' }}>
           <label htmlFor="service-select" className="text-sm" style={{ fontWeight: 600 }}>
             Office:
           </label>
