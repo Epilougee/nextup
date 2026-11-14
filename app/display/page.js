@@ -181,7 +181,7 @@ export default function PublicDisplayPage() {
                       fontSize: '0.78rem',
                       fontWeight: 800,
                       letterSpacing: '0.08em',
-                      color: tile.isServing ? 'var(--accent)' : 'var(--muted)',
+                      color: tile.isServing ? theme.color : 'var(--muted)',
                       textTransform: 'uppercase',
                       marginBottom: '0.35rem',
                     }}
@@ -194,7 +194,7 @@ export default function PublicDisplayPage() {
                     style={{
                       fontSize: tile.isServing ? '4.25rem' : '3rem',
                       fontWeight: 800,
-                      color: tile.isServing ? 'var(--accent)' : 'var(--muted)',
+                      color: tile.isServing ? theme.color : 'var(--muted)',
                       letterSpacing: '-0.02em',
                       lineHeight: 1.1,
                     }}
