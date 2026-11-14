@@ -367,7 +367,7 @@ export default function StudentHomePage() {
                     <span className="text-sm">
                       Your active token: <strong style={{ color: 'var(--accent)' }}>{svc.activeToken.token_code}</strong>
                     </span>
-                    <button className="btn btn-outline btn-sm" onClick={() => router.push('/my-token')}>
+                    <button className="btn btn-accent btn-sm" onClick={() => router.push('/my-token')} style={{ fontWeight: 600 }}>
                       View Live Position
                     </button>
                   </div>
@@ -436,7 +436,7 @@ export default function StudentHomePage() {
                   </div>
 
                   <button
-                    className="btn btn-outline btn-sm"
+                    className="btn btn-accent btn-sm"
                     style={{ flexShrink: 0, minWidth: '78px', height: '35px', fontWeight: 600 }}
                     onClick={() => setViewingDoc(doc)}
                   >
