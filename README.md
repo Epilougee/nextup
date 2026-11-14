@@ -1,6 +1,6 @@
 # NextUp - Digital Queue, Token Management & Instant Document Portal
 
-**Live GitHub Repository**: [https://github.com/Epilougee/queueless](https://github.com/Epilougee/queueless)
+**Live GitHub Repository**: [https://github.com/Epilougee/nextup](https://github.com/Epilougee/nextup)
 
 NextUp is an institutional digital queue, token management, and instant digital document issuance web application designed for college administration offices (Accounts, Examination Cell, Admissions, Library, Certificates).
 
@@ -97,8 +97,8 @@ Built with a soothing, modern Slate & Pure White design, it provides students wi
 ## 4. Local Setup & Quick Start
 
 ```bash
-git clone https://github.com/Epilougee/queueless.git
-cd queueless
+git clone https://github.com/Epilougee/nextup.git
+cd nextup
 npm install
 npm run dev
 ```
@@ -113,7 +113,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 ## 5. Vercel Deployment Steps
 
 1. Go to [https://vercel.com/new](https://vercel.com/new).
-2. Select your repository `Epilougee/queueless`.
+2. Select your repository `Epilougee/nextup`.
 3. Add environment variables:
    - `SUPABASE_URL`: `https://your-project-id.supabase.co`
    - `SUPABASE_SERVICE_KEY`: Your Supabase service role secret.
