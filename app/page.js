@@ -251,15 +251,15 @@ export default function StudentHomePage() {
           className={`portal-tab-btn ${activeTab === 'digital' ? 'active' : ''}`}
           onClick={() => setActiveTab('digital')}
         >
-          <IconBolt style={{ color: activeTab === 'digital' ? '#10B981' : 'inherit' }} />
-          <span>Digital Documents (No Office Visit)</span>
+          <IconBolt />
+          <span>Digital Documents (No Visit)</span>
         </button>
 
         <button
           className={`portal-tab-btn ${activeTab === 'physical' ? 'active' : ''}`}
           onClick={() => setActiveTab('physical')}
         >
-          <IconWalk style={{ color: activeTab === 'physical' ? '#6366F1' : 'inherit' }} />
+          <IconWalk />
           <span>Counter Desks (Live Tokens)</span>
         </button>
 
@@ -277,20 +277,20 @@ export default function StudentHomePage() {
         <div className="fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
           <div
             style={{
-              padding: '0.75rem 1rem',
+              padding: '0.85rem 1rem',
               backgroundColor: 'var(--emerald-light)',
               border: '1px solid var(--emerald-border)',
-              borderRadius: 'var(--radius-sm)',
-              fontSize: '0.85rem',
+              borderRadius: 'var(--radius)',
+              fontSize: '0.875rem',
               color: 'var(--emerald)',
               display: 'flex',
               alignItems: 'center',
-              gap: '0.65rem',
+              gap: '0.75rem',
             }}
           >
-            <IconShield style={{ fontSize: '1.1rem' }} />
+            <IconShield style={{ fontSize: '1.25rem', flexShrink: 0 }} />
             <div>
-              <strong>Instant Digital Delivery Enabled:</strong> Documents applied here are generated instantly with digital registrar verification seals. <em>Physical counter presence is not required.</em>
+              <strong>Instant Digital Clearance:</strong> Documents applied here are verified and issued online immediately. Physical counter presence is not required.
             </div>
           </div>
 
@@ -318,7 +318,7 @@ export default function StudentHomePage() {
                     </span>
                     <h3 style={{ fontSize: '1.1rem' }}>{dept.name}</h3>
                   </div>
-                  <span className="badge badge-digital" style={{ fontSize: '0.7rem' }}>
+                  <span className="badge badge-digital" style={{ fontSize: '0.72rem' }}>
                     <span className="status-dot"></span>
                     Instant Online
                   </span>
@@ -328,26 +328,19 @@ export default function StudentHomePage() {
                   {digitalDocs.map((doc) => (
                     <div
                       key={doc.id}
-                      className="inset-box"
-                      style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        flexWrap: 'wrap',
-                        gap: '0.75rem',
-                        backgroundColor: '#FFFFFF',
-                      }}
+                      className="doc-item-card"
                     >
                       <div style={{ flex: 1, minWidth: '220px' }}>
-                        <div style={{ fontWeight: 700, fontSize: '0.95rem', color: 'var(--primary-dark)', marginBottom: '0.2rem' }}>
+                        <div style={{ fontWeight: 600, fontSize: '0.95rem', color: 'var(--primary-dark)', marginBottom: '0.2rem' }}>
                           {doc.title}
                         </div>
                         <div className="text-muted text-sm" style={{ lineHeight: 1.4 }}>
                           {doc.description}
                         </div>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '0.35rem' }}>
-                          <span className="text-xs" style={{ color: 'var(--emerald)', fontWeight: 700 }}>
-                            {doc.deliveryText}
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '0.4rem' }}>
+                          <span className="badge badge-digital" style={{ fontSize: '0.7rem', padding: '0.15rem 0.45rem' }}>
+                            <IconShield style={{ fontSize: '0.65rem' }} />
+                            <span>{doc.deliveryText}</span>
                           </span>
                         </div>
                       </div>
