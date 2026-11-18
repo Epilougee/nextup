@@ -12,6 +12,7 @@ import {
   IconQueue,
   IconServices,
   IconAnalytics,
+  IconUsers,
   IconDisplay,
   IconLogout,
   IconBars,
@@ -36,6 +37,7 @@ export default function AdminLayout({ children, user }) {
     { href: '/admin/queue', label: 'Queue Console', icon: <IconQueue /> },
     { href: '/admin/services', label: 'Offices & Hours', icon: <IconServices /> },
     { href: '/admin/analytics', label: 'Analytics', icon: <IconAnalytics /> },
+    { href: '/admin/users', label: 'Faculty & Students', icon: <IconUsers /> },
   ];
 
   return (

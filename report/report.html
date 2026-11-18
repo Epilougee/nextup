@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>NextUp — Mini Project Report</title>
+<style>
+/* ── FONTS: use locally-available Inter/Arial, never fetch from internet ── */
+@font-face {
+  font-family: 'Inter';
+  src: local('Inter'), local('Inter Regular'), local('Arial');
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'Inter';
+  src: local('Inter Bold'), local('Arial Bold');
+  font-weight: 700;
+}
+
+:root {
+  --accent:   #E8590C;      /* NextUp orange — exact primary color */
+  --accent-t: #FFF3EC;      /* accent tint for highlight boxes */
+  --ink:      #1A1A2E;      /* near-black body text */
+  --muted:    #6B7280;
+  --border:   #E2E8F0;
+  --bg:       #F8FAFC;
+  --green:    #166534;
+  --blue:     #1E40AF;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', Arial, sans-serif;
+  font-size: 10.5pt;
+  line-height: 1.5;
+  color: var(--ink);
+  background: white;
+}
+
+/* ── A4 PAGE ─────────────────────────────────────────────────────── */
+.page {
+  width: 210mm;
+  min-height: 297mm;
+  max-height: 297mm;
+  overflow: hidden;
+  padding: 10mm 18mm 10mm 18mm;
+  margin: 0 auto;
+  position: relative;
+  page-break-after: always;
+  display: flex;
+  flex-direction: column;
+}
+.page:last-child { page-break-after: auto; }
+
+/* ── HEADER / FOOTER ─────────────────────────────────────────────── */
+.hdr {
+  display: flex;
+  justify-content: space-between;
+  font-size: 7.5pt;
+  color: var(--muted);
+  letter-spacing: 0.03em;
+  padding-bottom: 5px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 7px;
+  font-family: 'Inter', Arial, sans-serif;
+  flex-shrink: 0;
+}
+.ftr {
+  margin-top: auto;
+  padding-top: 5px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  font-size: 7.5pt;
+  color: var(--muted);
+  font-family: 'Inter', Arial, sans-serif;
+  flex-shrink: 0;
+}
+
+/* ── PAGE TITLE ──────────────────────────────────────────────────── */
+.ptitle {
+  font-size: 20pt;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.1;
+  padding-bottom: 5px;
+  border-bottom: 2.5px solid var(--accent);
+  margin-bottom: 10px;
+  flex-shrink: 0;
+}
+
+/* ── SECTION HEADINGS ────────────────────────────────────────────── */
+h2 {
+  font-size: 11pt;
+  font-weight: 700;
+  color: var(--accent);
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+h3 {
+  font-size: 10pt;
+  font-weight: 700;
+  color: var(--ink);
+  margin-top: 7px;
+  margin-bottom: 3px;
+}
+p { margin-bottom: 5px; }
+ul, ol { padding-left: 16px; margin-bottom: 5px; }
+li { margin-bottom: 2px; }
+
+/* ── TABLES ──────────────────────────────────────────────────────── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 9pt;
+  margin-bottom: 8px;
+}
+th {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  padding: 4px 8px;
+  text-align: left;
+  font-size: 8pt;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+td {
+  border: 1px solid var(--border);
+  padding: 5px 8px;
+  vertical-align: top;
+  font-size: 9pt;
+}
+tr:nth-child(even) td { background: #FAFAFA; }
+
+/* ── CARDS ───────────────────────────────────────────────────────── */
+.card-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.card {
+  flex: 1;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 9px 10px;
+  background: white;
+}
+.card-title {
+  font-size: 9pt;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+.card-body { font-size: 8.5pt; }
+
+/* ── "IN SIMPLE WORDS" BOX ───────────────────────────────────────── */
+.simple-box {
+  background: var(--accent-t);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 6px 6px 0;
+  padding: 7px 10px;
+  margin: 7px 0;
+  font-size: 9pt;
+}
+.simple-box strong { font-weight: 700; }
+
+/* ── HORIZONTAL FLOW ─────────────────────────────────────────────── */
+.flow {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin: 8px 0;
+}
+.flow-step {
+  flex: 1;
+  text-align: center;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px 4px;
+  font-size: 8pt;
+  line-height: 1.3;
+}
+.flow-num {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  line-height: 18px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: white;
+  font-size: 7.5pt;
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+.flow-arrow {
+  font-size: 11pt;
+  color: var(--accent);
+  flex-shrink: 0;
+  padding: 0 2px;
+}
+
+/* ── SCREENSHOTS ─────────────────────────────────────────────────── */
+.ss-full {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  display: block;
+  margin-bottom: 4px;
+}
+.ss-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+.ss-row img {
+  flex: 1;
+  width: 50%;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  min-width: 0;
+}
+.ss-cap {
+  font-size: 8pt;
+  color: var(--muted);
+  margin-bottom: 7px;
+  line-height: 1.3;
+}
+.ss-cap strong { color: var(--ink); font-weight: 700; }
+
+/* ── BEFORE/AFTER TABLE ──────────────────────────────────────────── */
+.ba-table { width: 100%; border-collapse: collapse; margin-bottom: 8px; }
+.ba-table th {
+  padding: 5px 10px;
+  font-size: 9pt;
+  text-transform: none;
+  letter-spacing: 0;
+}
+.ba-table td { padding: 5px 10px; font-size: 9pt; }
+.ba-table .col-b { background: #FFF5F5; color: #991B1B; }
+.ba-table .col-a { background: #F0FDF4; color: #166534; }
+
+/* ── OBJECTIVES CARDS ────────────────────────────────────────────── */
+.obj-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px;
+  margin-bottom: 8px;
+}
+.obj-card {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 10px;
+  background: white;
+}
+.obj-num {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: white;
+  font-size: 8.5pt;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 4px;
+}
+.obj-text { font-size: 9pt; font-weight: 600; }
+
+/* ── SCOPE LISTS ─────────────────────────────────────────────────── */
+.scope-row { display: flex; gap: 10px; margin-bottom: 8px; }
+.scope-col { flex: 1; }
+.scope-title { font-size: 9pt; font-weight: 700; margin-bottom: 5px; }
+.scope-col li { font-size: 8.5pt; margin-bottom: 2px; }
+
+/* ── ROLE CARDS ──────────────────────────────────────────────────── */
+.role-row { display: flex; gap: 8px; margin-bottom: 8px; }
+.role-card {
+  flex: 1;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 9px 11px;
+}
+.role-name { font-size: 10pt; font-weight: 700; color: var(--accent); margin-bottom: 2px; }
+.role-who { font-size: 8pt; color: var(--muted); margin-bottom: 5px; }
+.role-card ul { font-size: 8.5pt; padding-left: 14px; }
+
+/* ── MODULE LIST ─────────────────────────────────────────────────── */
+.mod-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 12px;
+  font-size: 9pt;
+  margin-bottom: 7px;
+}
+.mod-item { display: flex; gap: 5px; }
+.mod-name { font-weight: 700; min-width: 110px; flex-shrink: 0; }
+.mod-desc { color: #374151; }
+
+/* ── DEPLOYMENT FLOW ──────────────────────────────────────────────── */
+.deploy-flow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin: 10px 0;
+  padding: 12px;
+  background: var(--bg);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+.deploy-step {
+  text-align: center;
+  padding: 8px 12px;
+}
+.deploy-icon {
+  font-size: 20pt;
+  margin-bottom: 3px;
+}
+.deploy-label { font-size: 8pt; font-weight: 700; color: var(--ink); }
+.deploy-sub { font-size: 7.5pt; color: var(--muted); }
+.deploy-arrow { font-size: 14pt; color: var(--accent); padding: 0 5px; }
+
+/* ── WORKED EXAMPLE TABLE ────────────────────────────────────────── */
+.worked-table th { background: #FFF3EC; color: var(--accent); }
+
+/* ── PAGE 1 GLANCE TABLE ─────────────────────────────────────────── */
+.glance-table td:first-child {
+  font-weight: 700;
+  color: var(--muted);
+  font-size: 8pt;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  width: 130px;
+  background: var(--bg);
+}
+
+/* ── TESTING TABLE ───────────────────────────────────────────────── */
+.pass { color: #166534; font-weight: 700; }
+
+/* ── LIMITATION / FUTURE BULLETS ────────────────────────────────── */
+.lf-row { display: flex; gap: 10px; margin-bottom: 8px; }
+.lf-col { flex: 1; }
+.lf-col h2 { margin-top: 0; }
+.lf-col li { font-size: 9pt; margin-bottom: 4px; }
+
+@media print {
+  body { background: white; }
+  .page { margin: 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     PAGE 1 — TITLE / ABSTRACT / AT A GLANCE / CONTENTS
+     ══════════════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="hdr">
+    <span>NextUp — Digital Queue &amp; Document Portal</span>
+    <span>Mini Project Report · 2026–27</span>
+  </div>
+
+  <!-- Title block -->
+  <div style="text-align:center; margin-bottom:14px;">
+    <div style="font-size:28pt; font-weight:900; color:var(--accent); letter-spacing:-1px; line-height:1;">NextUp</div>
+    <div style="font-size:11pt; color:var(--muted); margin-top:4px;">Digital Queue, Token Management &amp; Instant Document Portal</div>
+    <div style="margin-top:12px; display:inline-block; background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:8px 24px; text-align:left; min-width:320px;">
+      <div style="font-size:9.5pt;"><strong>Student:</strong> Swapnil Sahu</div>
+      <div style="font-size:9.5pt;"><strong>Program:</strong> BCA (AI &amp; Data Science), Ajeenkya DY Patil University, Pune</div>
+      <div style="font-size:9.5pt;"><strong>Academic Year:</strong> 2026–27</div>
+    </div>
+  </div>
+
+  <!-- Abstract -->
+  <h2>Abstract</h2>
+  <p style="font-size:9.5pt;">
+    NextUp is a web application for college office queues and digital documents.
+    Students log in to take a numbered token (a slip that holds their place in line) for offices
+    that need a physical visit — Accounts, Examination Cell, Admissions, Library, or Certificates.
+    They can also download verified digital documents instantly, without visiting any counter.
+    Office staff use a separate console to call the next student, skip no-shows, and view analytics.
+    A public TV board shows live counter status. The application uses Next.js, Supabase (PostgreSQL),
+    and runs on Vercel.
+  </p>
+
+  <!-- At a glance -->
+  <h2>Project at a Glance</h2>
+  <table class="glance-table" style="margin-bottom:10px;">
+    <tbody>
+      <tr><td>Language</td><td>JavaScript (ES6+, no TypeScript)</td></tr>
+      <tr><td>Framework</td><td>Next.js 14 (App Router)</td></tr>
+      <tr><td>Database</td><td>Supabase (PostgreSQL)</td></tr>
+      <tr><td>Hosting</td><td>Vercel (serverless) + Supabase (managed database)</td></tr>
+      <tr><td>User Roles</td><td>Student · Admin (office staff)</td></tr>
+      <tr><td>Main Feature</td><td>Live token queue with real-time position + instant digital documents</td></tr>
+      <tr><td>GitHub</td><td>github.com/Epilougee/nextup</td></tr>
+    </tbody>
+  </table>
+
+  <!-- Contents -->
+  <h2>Contents</h2>
+  <table style="font-size:9pt; margin-bottom:0;">
+    <tbody>
+      <tr><td style="border:none; padding:2px 0;">1 · Introduction, Problem, Objectives, Scope</td><td style="border:none; padding:2px 0; text-align:right;">p. 2</td></tr>
+      <tr><td style="border:none; padding:2px 0;">2 · Technology Stack</td><td style="border:none; padding:2px 0; text-align:right;">p. 3</td></tr>
+      <tr><td style="border:none; padding:2px 0;">3 · System Design — Roles and Architecture</td><td style="border:none; padding:2px 0; text-align:right;">p. 4</td></tr>
+      <tr><td style="border:none; padding:2px 0;">4 · Database — ER Diagram and Tables</td><td style="border:none; padding:2px 0; text-align:right;">p. 5</td></tr>
+      <tr><td style="border:none; padding:2px 0;">5 · How It Works — User Flows and Modules</td><td style="border:none; padding:2px 0; text-align:right;">p. 6</td></tr>
+      <tr><td style="border:none; padding:2px 0;">6 · Core Logic — How the Queue Engine Works</td><td style="border:none; padding:2px 0; text-align:right;">p. 7</td></tr>
+      <tr><td style="border:none; padding:2px 0;">7 · Screenshots Part 1</td><td style="border:none; padding:2px 0; text-align:right;">p. 8</td></tr>
+      <tr><td style="border:none; padding:2px 0;">8 · Screenshots Part 2</td><td style="border:none; padding:2px 0; text-align:right;">p. 9</td></tr>
+      <tr><td style="border:none; padding:2px 0;">9 · Testing, Limitations, Future Scope, Conclusion, References</td><td style="border:none; padding:2px 0; text-align:right;">p. 10</td></tr>
+    </tbody>
+  </table>
+
+  <div class="ftr"><span>NextUp</span><span>1 / 10</span></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     PAGE 2 — INTRODUCTION, PROBLEM, OBJECTIVES, SCOPE
+     ══════════════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="hdr"><span>NextUp — Digital Queue &amp; Document Portal</span><span>Introduction</span></div>
+  <div class="ptitle">Introduction</div>
+
+  <p style="font-size:9.5pt; margin-bottom:8px;">
+    Every semester, students at Indian colleges spend hours standing in queues at different office counters
+    — to pay fees, collect documents, or submit forms. There is no way to know how long the wait will be.
+    NextUp solves this by giving each student a numbered token (like a ticket) and showing their position
+    on screen in real time. For documents that do not need a physical visit, students can download a
+    verified PDF instantly.
+  </p>
+
+  <h2>The Problem</h2>
+  <table class="ba-table">
+    <thead>
+      <tr>
+        <th style="width:50%;">❌ Before (without the system)</th>
+        <th style="width:50%;">✅ With NextUp</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="col-b">Students stand in long physical queues, unsure how long the wait is.</td>
+        <td class="col-a">Students get a token and see their exact position on screen.</td>
+      </tr>
+      <tr>
+        <td class="col-b">Staff have no way to track who is next or how many have been served.</td>
+        <td class="col-a">Staff use a console to call next, complete, skip, or recall tokens.</td>
+      </tr>
+      <tr>
+        <td class="col-b">Students visit the office only to discover the document is ready by email.</td>
+        <td class="col-a">Digital documents (bonafide, fee receipts) are issued instantly online.</td>
+      </tr>
+      <tr>
+        <td class="col-b">No data on peak hours or no-show rates for office planning.</td>
+        <td class="col-a">Admin analytics show hourly traffic, average wait, and no-show rate.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Objectives</h2>
+  <div class="obj-grid">
+    <div class="obj-card">
+      <div class="obj-num">1</div>
+      <div class="obj-text">Replace physical queues with a digital token system.</div>
+    </div>
+    <div class="obj-card">
+      <div class="obj-num">2</div>
+      <div class="obj-text">Issue verified documents instantly without an office visit.</div>
+    </div>
+    <div class="obj-card">
+      <div class="obj-num">3</div>
+      <div class="obj-text">Give office staff a real-time console to manage the queue.</div>
+    </div>
+    <div class="obj-card">
+      <div class="obj-num">4</div>
+      <div class="obj-text">Show analytics so staff can plan staffing for peak hours.</div>
+    </div>
+  </div>
+
+  <h2>Scope</h2>
+  <div class="scope-row">
+    <div class="scope-col">
+      <div class="scope-title" style="color:var(--green);">✅ Included</div>
+      <ul>
+        <li>5 college offices: ACC, EXM, ADM, LIB, CRT</li>
+        <li>Student login, token issuance, live position tracking</li>
+        <li>Digital document issuance (no counter visit needed)</li>
+        <li>Admin queue console: call next, complete, skip, recall</li>
+        <li>Public TV display board for the waiting room</li>
+        <li>Analytics: total tokens, wait time, no-show rate</li>
+        <li>In-memory fallback database for offline demos</li>
+      </ul>
+    </div>
+    <div class="scope-col">
+      <div class="scope-title" style="color:#991B1B;">❌ Not Included</div>
+      <ul>
+        <li>SMS or push notifications to students</li>
+        <li>Multiple counters per department</li>
+        <li>Integration with a real college ERP or SIS</li>
+        <li>Student registration (admin creates accounts)</li>
+        <li>Payment gateway for fee collection</li>
+        <li>Mobile native app (web only)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="ftr"><span>NextUp</span><span>2 / 10</span></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     PAGE 3 — TECHNOLOGY STACK
+     ══════════════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="hdr"><span>NextUp — Digital Queue &amp; Document Portal</span><span>Technology Stack</span></div>
+  <div class="ptitle">Technology Stack</div>
+
+  <table style="margin-bottom:10px;">
+    <thead>
+      <tr><th>Layer</th><th>Technology</th><th>Used For (what it does in this project)</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Language</strong></td>
+        <td>JavaScript ES6+</td>
+        <td>All server and browser code; no TypeScript used</td>
+      </tr>
+      <tr>
+        <td><strong>Framework</strong></td>
+        <td>Next.js 14 (App Router)</td>
+        <td>Pages, API routes, server-side rendering</td>
+      </tr>
+      <tr>
+        <td><strong>Database</strong></td>
+        <td>Supabase (PostgreSQL)</td>
+        <td>Stores users, tokens, services, documents</td>
+      </tr>
+      <tr>
+        <td><strong>Login &amp; Security</strong></td>
+        <td>bcryptjs + jose JWTs</td>
+        <td>Password hashing; signed login tokens in cookies</td>
+      </tr>
+      <tr>
+        <td><strong>Charts &amp; UI</strong></td>
+        <td>Chart.js + react-chartjs-2</td>
+        <td>Bar chart on the analytics dashboard</td>
+      </tr>
+      <tr>
+        <td><strong>Icons</strong></td>
+        <td>Font Awesome 6</td>
+        <td>All UI icons as inline SVG React components</td>
+      </tr>
+      <tr>
+        <td><strong>Hosting</strong></td>
+        <td>Vercel (serverless)</td>
+        <td>Deploys the Next.js app; each request runs a function</td>
+      </tr>
+      <tr>
+        <td><strong>Local Demo DB</strong></td>
+        <td>lib/mockDb.js (in-memory)</td>
+        <td>Auto-activates when no Supabase key is set</td>
+      </tr>
+      <tr>
+        <td><strong>Dev Tools</strong></td>
+        <td>Playwright</td>
+        <td>Browser automation for testing and screenshots</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Deployment — 4-Step Process</h2>
+  <div class="deploy-flow">
+    <div class="deploy-step">
+      <div class="deploy-icon">📁</div>
+      <div class="deploy-label">1. Code on GitHub</div>
+      <div class="deploy-sub">github.com/Epilougee/nextup</div>
+    </div>
+    <div class="deploy-arrow">→</div>
+    <div class="deploy-step">
+      <div class="deploy-icon">▲</div>
+      <div class="deploy-label">2. Build on Vercel</div>
+      <div class="deploy-sub">Auto-builds on every git push</div>
+    </div>
+    <div class="deploy-arrow">→</div>
+    <div class="deploy-step">
+      <div class="deploy-icon">🐘</div>
+      <div class="deploy-label">3. Database on Supabase</div>
+      <div class="deploy-sub">PostgreSQL; env key passed to Vercel</div>
+    </div>
+    <div class="deploy-arrow">→</div>
+    <div class="deploy-step">
+      <div class="deploy-icon">🌐</div>
+      <div class="deploy-label">4. Live Website</div>
+      <div class="deploy-sub">Served globally via Vercel CDN</div>
+    </div>
+  </div>
+
+  <div class="simple-box">
+    <strong>In simple words:</strong><br>
+    <strong>Front end</strong> — the web pages you see in your browser (React components in <code>app/</code>).<br>
+    <strong>Back end</strong> — the API routes in <code>app/api/</code> that read and write the database; they run on Vercel's servers, never in your browser.<br>
+    <strong>Database</strong> — Supabase stores all users, tokens, and documents; the back end is the only code that ever talks to it directly.
+  </div>
+
+  <h2>Why Polling Instead of WebSockets?</h2>
+  <p style="font-size:9.5pt;">
+    Vercel runs each request as a short-lived function (a serverless function).
+    WebSockets (a live two-way connection) need a server that stays open — Vercel's functions close immediately after each request.
+    So the app polls (asks the server every 4 seconds): "Any updates?"
+    It pauses automatically when the browser tab is hidden, saving network calls.
+  </p>
+
+  <div class="ftr"><span>NextUp</span><span>3 / 10</span></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     PAGE 4 — SYSTEM DESIGN
+     ══════════════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="hdr"><span>NextUp — Digital Queue &amp; Document Portal</span><span>System Design</span></div>
+  <div class="ptitle">System Design</div>
+
+  <h2>User Roles</h2>
+  <div class="role-row">
+    <div class="role-card">
+      <div class="role-name">Student</div>
+      <div class="role-who">Any enrolled student with a login account</div>
+      <ul>
+        <li>Log in and view open offices</li>
+        <li>Take a physical counter token (one per office)</li>
+        <li>See live queue position and estimated wait time</li>
+        <li>Download verified digital documents instantly</li>
+        <li>View their token and document history</li>
+      </ul>
+    </div>
+    <div class="role-card">
+      <div class="role-name">Admin (Office Staff)</div>
+      <div class="role-who">Staff logged in with an admin account</div>
+      <ul>
+        <li>View the full waiting list for any department</li>
+        <li>Call next token, mark it complete, or skip a no-show</li>
+        <li>Recall a previously skipped student</li>
+        <li>Open or close a department counter</li>
+        <li>View analytics: hourly chart, wait times, no-show rate</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>Architecture Diagram</h2>
+
+  <!-- Architecture SVG -->
+  <svg width="100%" viewBox="0 0 620 230" xmlns="http://www.w3.org/2000/svg" style="display:block; margin-bottom:8px;">
+    <!-- Browser box -->
+    <rect x="10" y="40" width="150" height="140" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1.5"/>
+    <text x="85" y="62" text-anchor="middle" font-family="Arial" font-size="10" font-weight="bold" fill="#1A1A2E">Browser</text>
+    <text x="85" y="80" text-anchor="middle" font-family="Arial" font-size="8" fill="#6B7280">(Student or Admin)</text>
+    <rect x="25" y="90" width="120" height="22" rx="4" fill="#E8590C" opacity="0.12" stroke="#E8590C" stroke-width="1"/>
+    <text x="85" y="105" text-anchor="middle" font-family="Arial" font-size="8" fill="#E8590C">React Pages (app/)</text>
+    <rect x="25" y="118" width="120" height="22" rx="4" fill="#E8590C" opacity="0.08" stroke="#E2E8F0" stroke-width="1"/>
+    <text x="85" y="133" text-anchor="middle" font-family="Arial" font-size="8" fill="#374151">Polling every 4 s</text>
+    <rect x="25" y="146" width="120" height="22" rx="4" fill="#E8590C" opacity="0.08" stroke="#E2E8F0" stroke-width="1"/>
+    <text x="85" y="161" text-anchor="middle" font-family="Arial" font-size="8" fill="#374151">JWT cookie (login)</text>
+
+    <!-- Arrow browser → server -->
+    <line x1="162" y1="110" x2="228" y2="110" stroke="#E8590C" stroke-width="1.5" marker-end="url(#arr)"/>
+    <text x="195" y="104" text-anchor="middle" font-family="Arial" font-size="7.5" fill="#E8590C">HTTP request</text>
+    <line x1="228" y1="130" x2="162" y2="130" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arr2)"/>
+    <text x="195" y="148" text-anchor="middle" font-family="Arial" font-size="7.5" fill="#6B7280">JSON response</text>
+
+    <!-- Server box -->
+    <rect x="230" y="20" width="180" height="185" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1.5"/>
+    <text x="320" y="42" text-anchor="middle" font-family="Arial" font-size="10" font-weight="bold" fill="#1A1A2E">Server (Vercel)</text>
+    <rect x="245" y="52" width="150" height="22" rx="4" fill="#E8590C" opacity="0.12" stroke="#E8590C" stroke-width="1"/>
+    <text x="320" y="67" text-anchor="middle" font-family="Arial" font-size="8" fill="#E8590C">API Routes (app/api/)</text>
+    <rect x="245" y="80" width="150" height="40" rx="4" fill="#1E40AF" opacity="0.07" stroke="#1E40AF" stroke-width="1"/>
+    <text x="320" y="96" text-anchor="middle" font-family="Arial" font-size="8" fill="#1E40AF" font-weight="bold">lib/queueEngine.js</text>
+    <text x="320" y="112" text-anchor="middle" font-family="Arial" font-size="7.5" fill="#374151">Pure queue logic functions</text>
+    <rect x="245" y="128" width="150" height="22" rx="4" fill="#E8590C" opacity="0.08" stroke="#E2E8F0" stroke-width="1"/>
+    <text x="320" y="143" text-anchor="middle" font-family="Arial" font-size="8" fill="#374151">lib/auth.js — JWT verify</text>
+    <rect x="245" y="156" width="150" height="22" rx="4" fill="#E8590C" opacity="0.08" stroke="#E2E8F0" stroke-width="1"/>
+    <text x="320" y="171" text-anchor="middle" font-family="Arial" font-size="8" fill="#374151">lib/departmentCatalog.js</text>
+    <rect x="245" y="184" width="150" height="17" rx="4" fill="#E8590C" opacity="0.08" stroke="#E2E8F0" stroke-width="1"/>
+    <text x="320" y="196" text-anchor="middle" font-family="Arial" font-size="8" fill="#374151">lib/mockDb.js (fallback)</text>
+
+    <!-- Arrow server → db -->
+    <line x1="412" y1="110" x2="458" y2="110" stroke="#E8590C" stroke-width="1.5" marker-end="url(#arr)"/>
+    <text x="435" y="104" text-anchor="middle" font-family="Arial" font-size="7.5" fill="#E8590C">SQL query</text>
+    <line x1="458" y1="130" x2="412" y2="130" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arr2)"/>
+    <text x="435" y="148" text-anchor="middle" font-family="Arial" font-size="7.5" fill="#6B7280">Row data</text>
+
+    <!-- Database box -->
+    <rect x="460" y="40" width="150" height="140" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1.5"/>
+    <text x="535" y="62" text-anchor="middle" font-family="Arial" font-size="10" font-weight="bold" fill="#1A1A2E">Database</text>
+    <text x="535" y="78" text-anchor="middle" font-family="Arial" font-size="8" fill="#6B7280">Supabase (PostgreSQL)</text>
+    <rect x="474" y="90" width="122" height="18" rx="3" fill="#E8590C" opacity="0.1" stroke="#E2E8F0" stroke-width="1"/>
+    <text x="535" y="103" text-anchor="middle" font-family="Arial" font-size="8" fill="#374151">users</text>
+    <rect x="474" y="114" width="122" height="18" rx="3" fill="#E8590C" opacity="0.1" stroke="#E2E8F0" stroke-width="1"/>
+    <text x="535" y="127" text-anchor="middle" font-family="Arial" font-size="8" fill="#374151">services</text>
+    <rect x="474" y="138" width="122" height="18" rx="3" fill="#E8590C" opacity="0.1" stroke="#E2E8F0" stroke-width="1"/>
+    <text x="535" y="151" text-anchor="middle" font-family="Arial" font-size="8" fill="#374151">tokens</text>
+    <rect x="474" y="162" width="122" height="18" rx="3" fill="#E8590C" opacity="0.1" stroke="#E2E8F0" stroke-width="1"/>
+    <text x="535" y="175" text-anchor="middle" font-family="Arial" font-size="8" fill="#374151">digital_documents</text>
+
+    <defs>
+      <marker id="arr" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+        <path d="M0,0 L0,6 L6,3 z" fill="#E8590C"/>
+      </marker>
+      <marker id="arr2" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+        <path d="M0,0 L0,6 L6,3 z" fill="#6B7280"/>
+      </marker>
+    </defs>
+  </svg>
+
+  <div class="simple-box">
+    <strong>In simple words:</strong> The browser shows the pages. It sends requests to the server.
+    The server runs the queue logic and reads/writes the database. The database stores everything permanently.
+    The browser never talks to the database directly — only the server does.
+  </div>
+
+  <div class="ftr"><span>NextUp</span><span>4 / 10</span></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     PAGE 5 — DATABASE
+     ══════════════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="hdr"><span>NextUp — Digital Queue &amp; Document Portal</span><span>Database</span></div>
+  <div class="ptitle">Database</div>
+
+  <!-- ER Diagram as SVG -->
+  <svg width="100%" viewBox="0 0 620 290" xmlns="http://www.w3.org/2000/svg" style="display:block; margin-bottom:8px;">
+
+    <!-- USERS table (top center) -->
+    <rect x="210" y="10" width="200" height="118" rx="6" fill="white" stroke="#E8590C" stroke-width="1.5"/>
+    <rect x="210" y="10" width="200" height="26" rx="6" fill="#E8590C"/>
+    <rect x="210" y="30" width="200" height="6" fill="#E8590C"/>
+    <text x="310" y="27" text-anchor="middle" font-family="Arial" font-size="9.5" font-weight="bold" fill="white">USERS</text>
+    <text x="222" y="51" font-family="Arial" font-size="8" fill="#6B7280">🔑 id (UUID, PK)</text>
+    <text x="222" y="65" font-family="Arial" font-size="8" fill="#374151">name, email (UNIQUE)</text>
+    <text x="222" y="79" font-family="Arial" font-size="8" fill="#374151">password_hash (bcrypt)</text>
+    <text x="222" y="93" font-family="Arial" font-size="8" fill="#374151">role: 'student' | 'admin'</text>
+    <text x="222" y="107" font-family="Arial" font-size="8" fill="#374151">created_at (timestamp)</text>
+    <text x="222" y="121" font-family="Arial" font-size="7.5" fill="#6B7280">1 admin + 15 demo students in seed</text>
+
+    <!-- SERVICES table (bottom left) -->
+    <rect x="20" y="175" width="190" height="108" rx="6" fill="white" stroke="#1E40AF" stroke-width="1.5"/>
+    <rect x="20" y="175" width="190" height="26" rx="6" fill="#1E40AF"/>
+    <rect x="20" y="195" width="190" height="6" fill="#1E40AF"/>
+    <text x="115" y="192" text-anchor="middle" font-family="Arial" font-size="9.5" font-weight="bold" fill="white">SERVICES</text>
+    <text x="32" y="216" font-family="Arial" font-size="8" fill="#6B7280">🔑 id (UUID, PK)</text>
+    <text x="32" y="230" font-family="Arial" font-size="8" fill="#374151">name, prefix (UNIQUE e.g. ACC)</text>
+    <text x="32" y="244" font-family="Arial" font-size="8" fill="#374151">is_open (true/false)</text>
+    <text x="32" y="258" font-family="Arial" font-size="8" fill="#374151">open_time, close_time</text>
+    <text x="32" y="272" font-family="Arial" font-size="8" fill="#374151">avg_minutes_default, max_tokens_per_day</text>
+
+    <!-- TOKENS table (bottom center) -->
+    <rect x="225" y="175" width="185" height="108" rx="6" fill="white" stroke="#166534" stroke-width="1.5"/>
+    <rect x="225" y="175" width="185" height="26" rx="6" fill="#166534"/>
+    <rect x="225" y="195" width="185" height="6" fill="#166534"/>
+    <text x="317" y="192" text-anchor="middle" font-family="Arial" font-size="9.5" font-weight="bold" fill="white">TOKENS</text>
+    <text x="237" y="216" font-family="Arial" font-size="8" fill="#6B7280">🔑 id (UUID, PK)</text>
+    <text x="237" y="230" font-family="Arial" font-size="8" fill="#374151">🔗 service_id (FK → services)</text>
+    <text x="237" y="244" font-family="Arial" font-size="8" fill="#374151">🔗 student_id (FK → users)</text>
+    <text x="237" y="258" font-family="Arial" font-size="8" fill="#374151">token_date, token_no, status</text>
+    <text x="237" y="272" font-family="Arial" font-size="8" fill="#374151">called_at, completed_at, served_by</text>
+
+    <!-- DIGITAL_DOCUMENTS table (bottom right) -->
+    <rect x="425" y="175" width="185" height="108" rx="6" fill="white" stroke="#7C3AED" stroke-width="1.5"/>
+    <rect x="425" y="175" width="185" height="26" rx="6" fill="#7C3AED"/>
+    <rect x="425" y="195" width="185" height="6" fill="#7C3AED"/>
+    <text x="517" y="192" text-anchor="middle" font-family="Arial" font-size="9.5" font-weight="bold" fill="white">DIGITAL_DOCUMENTS</text>
+    <text x="437" y="216" font-family="Arial" font-size="8" fill="#6B7280">🔑 id (UUID, PK)</text>
+    <text x="437" y="230" font-family="Arial" font-size="8" fill="#374151">🔗 student_id (FK → users)</text>
+    <text x="437" y="244" font-family="Arial" font-size="8" fill="#374151">🔗 service_id (FK → services)</text>
+    <text x="437" y="258" font-family="Arial" font-size="8" fill="#374151">doc_title, reference_no (UNIQUE)</text>
+    <text x="437" y="272" font-family="Arial" font-size="8" fill="#374151">metadata (JSONB), issued_at</text>
+
+    <!-- Relationships -->
+    <!-- USERS 1:N TOKENS -->
+    <line x1="310" y1="128" x2="310" y2="148" stroke="#6B7280" stroke-width="1" stroke-dasharray="4,2"/>
+    <line x1="310" y1="148" x2="317" y2="148" stroke="#6B7280" stroke-width="1"/>
+    <line x1="317" y1="148" x2="317" y2="175" stroke="#6B7280" stroke-width="1" marker-end="url(#arr3)"/>
+    <text x="295" y="162" font-family="Arial" font-size="7.5" fill="#6B7280">1:N</text>
+
+    <!-- USERS 1:N DIGITAL_DOCS -->
+    <line x1="380" y1="68" x2="440" y2="68" stroke="#6B7280" stroke-width="1" stroke-dasharray="4,2"/>
+    <line x1="440" y1="68" x2="517" y2="68" stroke="#6B7280" stroke-width="1"/>
+    <line x1="517" y1="68" x2="517" y2="175" stroke="#6B7280" stroke-width="1" marker-end="url(#arr3)"/>
+    <text x="445" y="62" font-family="Arial" font-size="7.5" fill="#6B7280">1:N</text>
+
+    <!-- SERVICES 1:N TOKENS -->
+    <line x1="115" y1="175" x2="115" y2="148" stroke="#6B7280" stroke-width="1" stroke-dasharray="4,2"/>
+    <line x1="115" y1="148" x2="265" y2="148" stroke="#6B7280" stroke-width="1"/>
+    <line x1="265" y1="148" x2="265" y2="175" stroke="#6B7280" stroke-width="1" marker-end="url(#arr3)"/>
+    <text x="150" y="143" font-family="Arial" font-size="7.5" fill="#6B7280">1:N</text>
+
+    <!-- SERVICES 1:N DIGITAL_DOCS -->
+    <line x1="210" y1="230" x2="225" y2="230" stroke="#6B7280" stroke-width="1" stroke-dasharray="4,2"/>
+    <line x1="425" y1="244" x2="410" y2="244" stroke="#6B7280" stroke-width="1"/>
+    <line x1="410" y1="244" x2="410" y2="230" stroke="#6B7280" stroke-width="1"/>
+    <text x="390" y="225" font-family="Arial" font-size="7.5" fill="#6B7280">1:N</text>
+
+    <defs>
+      <marker id="arr3" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto">
+        <path d="M0,0 L0,5 L5,2.5 z" fill="#6B7280"/>
+      </marker>
+    </defs>
+  </svg>
+
+  <!-- Table summary -->
+  <table style="font-size:9pt; margin-bottom:7px;">
+    <thead><tr><th>Table</th><th>What it stores</th></tr></thead>
+    <tbody>
+      <tr><td><strong>users</strong></td><td>All student and admin accounts. Password stored as a bcrypt hash (a scrambled version — never plain text).</td></tr>
+      <tr><td><strong>services</strong></td><td>The 5 college offices. Stores name, short prefix (ACC, EXM…), hours, and open/closed status.</td></tr>
+      <tr><td><strong>tokens</strong></td><td>Every physical counter token ever issued. Tracks status (waiting → serving → completed / no_show / cancelled) and timestamps.</td></tr>
+      <tr><td><strong>digital_documents</strong></td><td>Instantly-issued digital documents. Each has a unique reference number and stores the document content in a JSONB (flexible data) column.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="simple-box">
+    <strong>In simple words:</strong> One user can have many tokens (one per day per office).
+    One service can receive many tokens and issue many documents.
+    Every token and every document knows which user and which service it belongs to — via a FK (foreign key: a link to another table's row).
+  </div>
+
+  <div class="ftr"><span>NextUp</span><span>5 / 10</span></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     PAGE 6 — HOW IT WORKS
+     ══════════════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="hdr"><span>NextUp — Digital Queue &amp; Document Portal</span><span>How It Works</span></div>
+  <div class="ptitle">How It Works</div>
+
+  <h2>Student Flow — Taking a Token</h2>
+  <div class="flow">
+    <div class="flow-step"><div class="flow-num">1</div><br>Log in<br>(student account)</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step"><div class="flow-num">2</div><br>Go to<br>Counter Desks tab</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step"><div class="flow-num">3</div><br>Pick an office<br>and take a token</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step"><div class="flow-num">4</div><br>See live position<br>and wait time</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step"><div class="flow-num">5</div><br>Get alerted<br>when nearly called</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step"><div class="flow-num">6</div><br>Visit counter<br>when called</div>
+  </div>
+
+  <h2>Student Flow — Getting a Digital Document</h2>
+  <div class="flow">
+    <div class="flow-step"><div class="flow-num">1</div><br>Log in</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step"><div class="flow-num">2</div><br>Go to<br>Get Docs tab</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step"><div class="flow-num">3</div><br>Pick a document<br>(e.g. Bonafide)</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step"><div class="flow-num">4</div><br>System issues it<br>instantly</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step"><div class="flow-num">5</div><br>Download PDF<br>with reference no.</div>
+  </div>
+
+  <h2>Admin Flow — Managing the Queue</h2>
+  <div class="flow">
+    <div class="flow-step"><div class="flow-num">1</div><br>Log in<br>(admin account)</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step"><div class="flow-num">2</div><br>Select a<br>department</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step"><div class="flow-num">3</div><br>See who is<br>now serving</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step"><div class="flow-num">4</div><br>Click<br>"Call Next"</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step"><div class="flow-num">5</div><br>Mark done or<br>skip no-show</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step"><div class="flow-num">6</div><br>TV board updates<br>automatically</div>
+  </div>
+
+  <h2>Main Modules</h2>
+  <div class="mod-grid">
+    <div class="mod-item">
+      <div class="mod-name">lib/queueEngine.js</div>
+      <div class="mod-desc">All token and wait-time calculations</div>
+    </div>
+    <div class="mod-item">
+      <div class="mod-name">lib/auth.js</div>
+      <div class="mod-desc">Login, JWT creation and verification</div>
+    </div>
+    <div class="mod-item">
+      <div class="mod-name">lib/departmentCatalog.js</div>
+      <div class="mod-desc">List of all services, digital vs physical</div>
+    </div>
+    <div class="mod-item">
+      <div class="mod-name">lib/mockDb.js</div>
+      <div class="mod-desc">In-memory database for demos without Supabase</div>
+    </div>
+    <div class="mod-item">
+      <div class="mod-name">app/page.js</div>
+      <div class="mod-desc">Student home: 3 tabs, Get Docs, Counter, My Docs</div>
+    </div>
+    <div class="mod-item">
+      <div class="mod-name">app/my-token/page.js</div>
+      <div class="mod-desc">Live token card with position and alert banner</div>
+    </div>
+    <div class="mod-item">
+      <div class="mod-name">app/admin/queue/page.js</div>
+      <div class="mod-desc">Admin queue console: call, complete, skip, recall</div>
+    </div>
+    <div class="mod-item">
+      <div class="mod-name">app/admin/analytics/page.js</div>
+      <div class="mod-desc">Bar chart and 4 summary metric cards</div>
+    </div>
+    <div class="mod-item">
+      <div class="mod-name">app/display/page.js</div>
+      <div class="mod-desc">Public TV board, no login required</div>
+    </div>
+    <div class="mod-item">
+      <div class="mod-name">components/usePolling.js</div>
+      <div class="mod-desc">Shared hook: polls API every 4 seconds</div>
+    </div>
+  </div>
+
+  <div class="ftr"><span>NextUp</span><span>6 / 10</span></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     PAGE 7 — CORE LOGIC
+     ══════════════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="hdr"><span>NextUp — Digital Queue &amp; Document Portal</span><span>Core Logic</span></div>
+  <div class="ptitle">How the Queue Engine Works</div>
+  <p style="font-size:9pt; margin-bottom:6px;">
+    <code>lib/queueEngine.js</code> contains all queue decisions as pure functions (functions that always
+    give the same output for the same input, with no side effects).
+    It runs on the server — never in the browser.
+  </p>
+
+  <!-- Flowchart SVG -->
+  <svg width="100%" viewBox="0 0 620 232" xmlns="http://www.w3.org/2000/svg" style="display:block; margin-bottom:8px;">
+    <!-- Step boxes -->
+    <!-- canTakeToken -->
+    <rect x="10" y="10" width="140" height="38" rx="5" fill="#FFF3EC" stroke="#E8590C" stroke-width="1.5"/>
+    <text x="80" y="27" text-anchor="middle" font-family="Arial" font-size="8.5" font-weight="bold" fill="#E8590C">canTakeToken()</text>
+    <text x="80" y="41" text-anchor="middle" font-family="Arial" font-size="8" fill="#374151">Office open? Quota ok?</text>
+    <!-- diamond decision -->
+    <polygon points="230,29 265,10 300,29 265,48" fill="white" stroke="#E8590C" stroke-width="1.5"/>
+    <text x="265" y="33" text-anchor="middle" font-family="Arial" font-size="8" fill="#E8590C">Pass?</text>
+    <!-- YES arrow -->
+    <line x1="150" y1="29" x2="230" y2="29" stroke="#E8590C" stroke-width="1.2" marker-end="url(#fa)"/>
+    <!-- NO arrow down -->
+    <line x1="265" y1="48" x2="265" y2="75" stroke="#991B1B" stroke-width="1.2" marker-end="url(#fa2)"/>
+    <text x="275" y="66" font-family="Arial" font-size="8" fill="#991B1B">No → error shown</text>
+    <!-- YES continues right -->
+    <line x1="300" y1="29" x2="340" y2="29" stroke="#166534" stroke-width="1.2" marker-end="url(#fa3)"/>
+    <text x="315" y="22" font-family="Arial" font-size="8" fill="#166534">Yes</text>
+
+    <!-- nextTokenNumber -->
+    <rect x="340" y="10" width="140" height="38" rx="5" fill="#F0FDF4" stroke="#166534" stroke-width="1.5"/>
+    <text x="410" y="27" text-anchor="middle" font-family="Arial" font-size="8.5" font-weight="bold" fill="#166534">nextTokenNumber()</text>
+    <text x="410" y="41" text-anchor="middle" font-family="Arial" font-size="8" fill="#374151">Max today + 1 → new no.</text>
+
+    <!-- Arrow down from nextTokenNumber -->
+    <line x1="410" y1="48" x2="410" y2="80" stroke="#6B7280" stroke-width="1.2" marker-end="url(#fa4)"/>
+
+    <!-- formatToken -->
+    <rect x="340" y="80" width="140" height="38" rx="5" fill="#EFF6FF" stroke="#1E40AF" stroke-width="1.5"/>
+    <text x="410" y="97" text-anchor="middle" font-family="Arial" font-size="8.5" font-weight="bold" fill="#1E40AF">formatToken()</text>
+    <text x="410" y="111" text-anchor="middle" font-family="Arial" font-size="8" fill="#374151">ACC + 5 → "ACC-005"</text>
+
+    <!-- Arrow down -->
+    <line x1="410" y1="118" x2="410" y2="148" stroke="#6B7280" stroke-width="1.2" marker-end="url(#fa4)"/>
+
+    <!-- Token saved to DB box -->
+    <rect x="310" y="148" width="200" height="30" rx="5" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1.5"/>
+    <text x="410" y="162" text-anchor="middle" font-family="Arial" font-size="8" fill="#374151">Token saved to database (status=waiting)</text>
+    <text x="410" y="174" text-anchor="middle" font-family="Arial" font-size="8" fill="#374151">Student sees position in queue</text>
+
+    <!-- getPosition + estimateWait -->
+    <rect x="10" y="80" width="175" height="38" rx="5" fill="#EFF6FF" stroke="#1E40AF" stroke-width="1.5"/>
+    <text x="97" y="97" text-anchor="middle" font-family="Arial" font-size="8.5" font-weight="bold" fill="#1E40AF">getPosition() + estimateWaitMinutes()</text>
+    <text x="97" y="111" text-anchor="middle" font-family="Arial" font-size="8" fill="#374151">Sorted FIFO position × avg minutes</text>
+
+    <!-- getAlertLevel -->
+    <rect x="10" y="148" width="175" height="38" rx="5" fill="#FFF3EC" stroke="#E8590C" stroke-width="1.5"/>
+    <text x="97" y="165" text-anchor="middle" font-family="Arial" font-size="8.5" font-weight="bold" fill="#E8590C">getAlertLevel()</text>
+    <text x="97" y="179" text-anchor="middle" font-family="Arial" font-size="8" fill="#374151">pos 1–3 → "near"  |  serving → "now"</text>
+
+    <!-- Arrow from getPosition to getAlertLevel -->
+    <line x1="97" y1="118" x2="97" y2="148" stroke="#6B7280" stroke-width="1.2" marker-end="url(#fa4)"/>
+
+    <!-- Label: 4s poll -->
+    <rect x="10" y="196" width="560" height="30" rx="4" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+    <text x="300" y="210" text-anchor="middle" font-family="Arial" font-size="8" fill="#6B7280">Every 4 seconds: browser asks server for updated position, wait time and alert level — page updates automatically</text>
+    <text x="300" y="222" text-anchor="middle" font-family="Arial" font-size="8" fill="#6B7280">(components/usePolling.js — pauses when tab is hidden)</text>
+
+    <defs>
+      <marker id="fa" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><path d="M0,0 L0,5 L5,2.5 z" fill="#E8590C"/></marker>
+      <marker id="fa2" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><path d="M0,0 L0,5 L5,2.5 z" fill="#991B1B"/></marker>
+      <marker id="fa3" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><path d="M0,0 L0,5 L5,2.5 z" fill="#166534"/></marker>
+      <marker id="fa4" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><path d="M0,0 L0,5 L5,2.5 z" fill="#6B7280"/></marker>
+    </defs>
+  </svg>
+
+  <h2>Worked Example — Real Seed Data</h2>
+  <table class="worked-table" style="margin-bottom:7px;">
+    <thead><tr><th>Input</th><th>Check</th><th>Result</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Aarav Patel takes a token at Accounts Office (ACC). Today already has 4 tokens.</td>
+        <td><code>canTakeToken()</code>: office is open, hours ok, no existing active token for Aarav.</td>
+        <td>Token <strong>ACC-005</strong> created. Status: <em>waiting</em>.</td>
+      </tr>
+      <tr>
+        <td>ACC-004 is <em>serving</em>. Aarav (ACC-005) is 1st in the waiting list.</td>
+        <td><code>getPosition()</code>: sorted by created_at, Aarav's token is index 0 → position 1.<br>
+            <code>estimateWaitMinutes(1, 8)</code>: 1×8 = 8 → rounded up to nearest 5 → <strong>10 min</strong>.</td>
+        <td>Screen shows: Position 1 · ~10 min wait.</td>
+      </tr>
+      <tr>
+        <td>Admin calls next. ACC-005 becomes <em>serving</em>.</td>
+        <td><code>getAlertLevel(0, 'serving')</code>: status is 'serving' → returns <strong>'now'</strong>.</td>
+        <td>Aarav sees amber alert: "Your token is now being called — go to the counter!"</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="simple-box">
+    <strong>Everyday analogy:</strong> It works like a bakery number ticket — you take a slip, watch the display, and go up only when your number is called.
+  </div>
+
+  <h2>Code Snippet (from <code>lib/queueEngine.js</code>)</h2>
+  <pre style="background:var(--bg); border:1px solid var(--border); border-radius:5px; padding:7px 10px; font-size:7.5pt; line-height:1.5; overflow:hidden;">// Wait time = position × average minutes, rounded up to nearest 5
+export function estimateWaitMinutes(position, avgMinutes = 8) {
+  if (!position || position &lt;= 0) return 0;
+  const rawWait = position * avgMinutes;      // e.g. 1 × 8 = 8
+  return Math.max(5, Math.ceil(rawWait / 5) * 5); // → 10 minutes
+}
+
+// Alert level: 'now' if serving, 'near' if top 3 in line, 'none' otherwise
+export function getAlertLevel(position, status) {
+  if (status === 'serving') return 'now';
+  if (status === 'waiting' &amp;&amp; position &gt;= 1 &amp;&amp; position &lt;= 3) return 'near';
+  return 'none';
+}</pre>
+
+  <div class="ftr"><span>NextUp</span><span>7 / 10</span></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     PAGE 8 — SCREENSHOTS PART 1
+     ══════════════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="hdr"><span>NextUp — Digital Queue &amp; Document Portal</span><span>Screenshots — Part 1</span></div>
+  <div class="ptitle">Screenshots — Part 1</div>
+
+  <!-- Full-width: Login -->
+  <img src="screenshots/01-login.png" alt="Login page" class="ss-full" style="max-height:290px; object-fit:contain; object-position:top;">
+  <div class="ss-cap"><strong>Figure 1 — Login page.</strong> Students and staff sign in with email and password. One-click demo logins fill the form automatically. A link to the public TV board is shown below the form.</div>
+
+  <!-- Two side by side: Student Home + Counter Desks -->
+  <div class="ss-row">
+    <div>
+      <img src="screenshots/02-student-home.png" alt="Student home" style="width:100%; border:1px solid var(--border); border-radius:5px; max-height:270px; object-fit:contain; object-position:top;">
+      <div class="ss-cap"><strong>Figure 2 — Student Home (Get Docs tab).</strong> Shows all five departments. Students pick a digital document and download it instantly with no office visit.</div>
+    </div>
+    <div>
+      <img src="screenshots/03-counter-desks.png" alt="Counter desks" style="width:100%; border:1px solid var(--border); border-radius:5px; max-height:270px; object-fit:contain; object-position:top;">
+      <div class="ss-cap"><strong>Figure 3 — Counter Desks tab.</strong> Shows live queue depth and open/closed status for each office. Students tap "Take Token" to join the queue.</div>
+    </div>
+  </div>
+
+  <div class="ftr"><span>NextUp</span><span>8 / 10</span></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     PAGE 9 — SCREENSHOTS PART 2
+     ══════════════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="hdr"><span>NextUp — Digital Queue &amp; Document Portal</span><span>Screenshots — Part 2</span></div>
+  <div class="ptitle">Screenshots — Part 2</div>
+
+  <!-- Full-width: TV Display -->
+  <img src="screenshots/06-display-board.png" alt="TV Display Board" class="ss-full" style="max-height:265px; object-fit:contain; object-position:top;">
+  <div class="ss-cap"><strong>Figure 4 — TV Display Board (/display).</strong> Public screen for the waiting room. Shows the token being served at each counter and the next two in line. No login needed. Live IST wall clock updates every second.</div>
+
+  <!-- Two side by side: Admin Queue + Analytics -->
+  <div class="ss-row">
+    <div>
+      <img src="screenshots/07-admin-queue.png" alt="Admin queue" style="width:100%; border:1px solid var(--border); border-radius:5px; max-height:235px; object-fit:contain; object-position:top;">
+      <div class="ss-cap"><strong>Figure 5 — Admin Queue Console.</strong> Staff see the now-serving token and the full waiting list. Buttons: Call Next, Complete, Skip (no-show), Recall.</div>
+    </div>
+    <div>
+      <img src="screenshots/08-admin-analytics.png" alt="Analytics" style="width:100%; border:1px solid var(--border); border-radius:5px; max-height:235px; object-fit:contain; object-position:top;">
+      <div class="ss-cap"><strong>Figure 6 — Analytics Dashboard.</strong> Shows total tokens, avg wait, avg service time, and no-show rate. Bar chart displays 7-day hourly traffic with an 11 AM peak from seed data.</div>
+    </div>
+  </div>
+
+  <!-- Two side by side: My Token + My Docs -->
+  <div class="ss-row" style="margin-top:4px;">
+    <div>
+      <img src="screenshots/04-my-token.png" alt="My token" style="width:100%; border:1px solid var(--border); border-radius:5px; max-height:185px; object-fit:contain; object-position:top;">
+      <div class="ss-cap"><strong>Figure 7 — My Token.</strong> Aarav holds ACC-005, position 1, ~10 min wait. Alert banner turns amber when top 3 in line.</div>
+    </div>
+    <div>
+      <img src="screenshots/09-admin-services.png" alt="Admin services" style="width:100%; border:1px solid var(--border); border-radius:5px; max-height:185px; object-fit:contain; object-position:top;">
+      <div class="ss-cap"><strong>Figure 8 — Admin Services.</strong> Staff can open or close any department counter with a toggle. CRT (Certificates) is shown as closed in the demo.</div>
+    </div>
+  </div>
+
+  <div class="ftr"><span>NextUp</span><span>9 / 10</span></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     PAGE 10 — TESTING / LIMITATIONS / FUTURE / CONCLUSION / REFERENCES
+     ══════════════════════════════════════════════════════════════════════ -->
+<div class="page" style="font-size:9.5pt; line-height:1.42;">
+  <div class="hdr"><span>NextUp — Digital Queue &amp; Document Portal</span><span>Testing &amp; Conclusion</span></div>
+  <div class="ptitle" style="font-size:17pt; margin-bottom:7px;">Testing, Limitations &amp; Conclusion</div>
+
+  <h2 style="margin-top:0;">Test Cases — Run Against Live App at localhost:3001</h2>
+  <table style="font-size:8.5pt; margin-bottom:7px;">
+    <thead><tr><th>#</th><th>Action</th><th>Expected</th><th>Actual Result</th><th>✓</th></tr></thead>
+    <tbody>
+      <tr><td>T1</td><td>Login: student1@demo.com / demo123</td><td>Redirect to student home</td><td>Redirected to / with "Aarav Patel" in header</td><td class="pass">Pass</td></tr>
+      <tr><td>T2</td><td>Login with wrong password</td><td>Error shown, no redirect</td><td>"Invalid email or password" banner displayed</td><td class="pass">Pass</td></tr>
+      <tr><td>T3</td><td>Student opens Counter Desks tab</td><td>Live queue counts shown per office</td><td>All 5 offices listed with token counts and status</td><td class="pass">Pass</td></tr>
+      <tr><td>T4</td><td>Open /display without login</td><td>TV board loads — no auth needed</td><td>Display board loaded with ACC/ADM/EXM/LIB counters</td><td class="pass">Pass</td></tr>
+      <tr><td>T5</td><td>Admin logs in and clicks Call Next</td><td>Next waiting token moves to serving</td><td>Next token shown in Now Serving card, status updated</td><td class="pass">Pass</td></tr>
+      <tr><td>T6</td><td>Student visits /admin/queue directly</td><td>Redirected away (no admin access)</td><td>Redirected to / (student home)</td><td class="pass">Pass</td></tr>
+    </tbody>
+  </table>
+
+  <div class="lf-row">
+    <div class="lf-col">
+      <h2>Limitations</h2>
+      <ul>
+        <li>Polling (not WebSockets) — up to 4-second lag in updates.</li>
+        <li>Digital documents use static templates, not a real college ERP.</li>
+        <li>Only one counter per department — no parallel serving.</li>
+      </ul>
+    </div>
+    <div class="lf-col">
+      <h2>Future Scope</h2>
+      <ul>
+        <li>SMS/push alerts when token is about to be called.</li>
+        <li>Connect to real student database for verified records.</li>
+        <li>Multiple counters per department with separate queues.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>Conclusion</h2>
+  <p style="margin-bottom:7px; font-size:9.5pt;">
+    NextUp replaces physical queues with a digital token system and instant document issuance.
+    It was built entirely with open-source tools — Next.js, Supabase, bcryptjs, Chart.js — and deployed for free on Vercel.
+    The queue engine in <code>lib/queueEngine.js</code> is clean, testable, and separate from the UI, which made it straightforward to verify every calculation.
+  </p>
+
+  <h2>References</h2>
+  <ul style="font-size:8.5pt; margin-bottom:0; line-height:1.6;">
+    <li>Next.js Documentation — <em>nextjs.org/docs</em> — App Router, Route Handlers, Server Components</li>
+    <li>Supabase Documentation — <em>supabase.com/docs</em> — PostgreSQL client, Row Level Security</li>
+    <li>bcryptjs — <em>npmjs.com/package/bcryptjs</em> — password hashing library</li>
+    <li>jose — <em>github.com/panva/jose</em> — JWT (JSON Web Token) signing and verification</li>
+    <li>Chart.js / react-chartjs-2 — <em>chartjs.org/docs</em> — analytics bar chart</li>
+    <li>Playwright — <em>playwright.dev</em> — browser automation for screenshots and testing</li>
+  </ul>
+
+  <div class="ftr"><span>NextUp</span><span>10 / 10</span></div>
+</div>
+
+</body>
+</html>
